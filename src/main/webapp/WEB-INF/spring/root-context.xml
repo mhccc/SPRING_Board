@@ -11,9 +11,9 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-		<property name="url" value="jdbc:mysql://127.0.0.1:3306/spring_board?useSSL=false&amp;serverTimezone=Asia/Seoul"></property>
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="url" value="jdbc:log4jdbc:mysql://127.0.0.1:3306/spring_board?useSSL=false"></property>
 		<property name="username" value="mccc"></property>
 		<property name="password" value="mccc"></property>
 	</bean>
@@ -24,5 +24,8 @@
         <property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
 	</bean>
 	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
 	
 </beans>
