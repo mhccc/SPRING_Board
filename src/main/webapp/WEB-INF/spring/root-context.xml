@@ -28,4 +28,7 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
+	<context:component-scan base-package="org.mccc.springboard.persistence" />
+	<context:component-scan base-package="org.mccc.springboard.service" />
+	
 </beans>

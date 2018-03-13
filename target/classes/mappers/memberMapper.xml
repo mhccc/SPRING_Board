@@ -4,5 +4,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.mccc.mapper.MemberMapper">
+	
+	<insert id="insertMember">
+		INSERT INTO tbl_member (mem_userid, mem_password, mem_email)
+		VALUES (#{userid}, #{password}, #{email})
+	</insert>
+	
+	<select id="selectMember" resultType="MemberVO">
+		SELECT *
+		FROM tbl_member
+		WHERE mem_userid = #{userid}
+	</select>
+	
+	<update id="updateMember">
+		UPDATE tbl_member
+		SET mem_password = #{password}, mem_email = #{email}
+		WHERE mem_userid = #{userid}
+	</update>
+	
+	<delete id="deleteMember">
+		DELETE
+		FROM tbl_member
+		WHERE mem_userid = #{userid}
+	</delete>
 
 </mapper>
