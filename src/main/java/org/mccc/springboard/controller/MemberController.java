@@ -30,12 +30,15 @@ public class MemberController {
 		logger.info("Member join post ...... ");
 		logger.info("MemberVO : " + memberVO.toString());
 
-		memberService.insertMember(memberVO);
+		memberService.createMember(memberVO);
 		
 		model.addAttribute("result", "success");
 		
 		return "/index";
 	}
+	
+	//아이디 중복 검사
+	//이메일 중복 검사
 
 	//로그인
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -44,7 +47,7 @@ public class MemberController {
 	}
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void loginPOST(Model model) throws Exception {
-		
+		logger.info("Member login post ...... ");
 	}
 	
 }

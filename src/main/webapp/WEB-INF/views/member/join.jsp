@@ -70,10 +70,11 @@
 		  var userid = $('#userid').val();
 		  $.ajax({
 			  type: 'POST',
-			  url: 'JoinCheck.do',
-			  data: {userid: userid},
-			  success: function(result) {
-				  if (result == "duplicate") {
+			  url: 'useridCheck',
+			  data: {'userid': userid},
+			  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			  success: function(data) {
+				  if (data == "duplicate") {
 					  $('#useridFeedback').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
 					  $('#useridCheckMessage').html('이미 사용중인 아이디입니다.');
 				  } else {
@@ -91,7 +92,22 @@
 	  if (len == 0) {
 		  $('#emailFeedback').attr('class', 'glyphicon glyphicon-envelope form-control-feedback');
 	  } else {
-		  $('#emailFeedback').attr('class', 'glyphicon glyphicon-ok form-control-feedback');
+		  var email = $('#email').val();
+		  $.ajax({
+			  type: 'POST',
+			  url: 'emailCheck',
+			  data: {'email': email},
+			  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			  success: function(data) {
+				  if (data == "duplicate") {
+					  $('#emailFeedback').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
+					  $('#emailCheckMessage').html('이미 사용중인 이메일입니다.');
+				  } else {
+					  $('#emailFeedback').attr('class', 'glyphicon glyphicon-ok form-control-feedback');
+					  $('#emailCheckMessage').html('');
+				  }
+			  }
+		  })
 	  }
   });
   

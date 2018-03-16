@@ -5,13 +5,13 @@
 
 <mapper namespace="org.mccc.mapper.MemberMapper">
 	
-	<insert id="insertMember">
+	<insert id="createMember">
 		INSERT INTO tbl_member (mem_userid, mem_password, mem_email)
 		VALUES (#{userid}, #{password}, #{email})
 	</insert>
 	
-	<select id="selectMember" resultType="MemberVO">
-		SELECT *
+	<select id="readMember" resultMap="MemberResultMap">
+		SELECT mem_userid, mem_password, mem_email, mem_regdate
 		FROM tbl_member
 		WHERE mem_userid = #{userid}
 	</select>
@@ -27,5 +27,12 @@
 		FROM tbl_member
 		WHERE mem_userid = #{userid}
 	</delete>
+	
+	<resultMap id="MemberResultMap" type="MemberVO">
+		<id property="userid" column="mem_userid"></id>
+		<result property="email" column="mem_email"></result>
+		<result property="password" column="mem_password"></result>
+		<result property="memberRegDate" column="mem_regdate"></result>
+	</resultMap>
 
 </mapper>

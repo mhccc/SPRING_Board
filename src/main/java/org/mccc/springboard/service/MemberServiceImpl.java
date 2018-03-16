@@ -13,13 +13,13 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDAO memberDAO;
 
 	@Override
-	public void insertMember(MemberVO memberVO) throws Exception {
-		memberDAO.insertMember(memberVO);
+	public void createMember(MemberVO memberVO) throws Exception {
+		memberDAO.createMember(memberVO);
 	}
 
 	@Override
-	public MemberVO selectMember(String userid) throws Exception {
-		return memberDAO.selectMember(userid);
+	public MemberVO readMember(String userid) throws Exception {
+		return memberDAO.readMember(userid);
 	}
 
 	@Override

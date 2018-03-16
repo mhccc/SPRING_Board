@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.mccc.mapper.ArticleMapper">
+
+	<insert id="createArticle">
+		INSERT INTO tbl_article (atc_title, atc_content, atc_writer)
+		VALUES (#{title}, #{content}, #{writer})
+	</insert>
+	
+	<select id="readArticle" resultMap="ArticleResultMap">
+		SELECT atc_no, atc_title, atc_content, atc_writer, atc_regdate, atc_hit, atc_commentcnt
+		FROM tbl_article
+		WHERE atc_no = #{articleNo}
+	</select>
+	
+	<update id="updateArticle">
+		UPDATE tbl_article
+		SET atc_title = #{title}, atc_content = #{content}
+		WHERE atc_no = #{articleNo}
+	</update>
+	
+	<delete id="deleteArticle">
+		DELETE
+		FROM tbl_article
+		WHERE atc_no = #{articleNo}
+	</delete>
+	
+	<select id="listAllArticle" resultMap="ArticleResultMap">
+		<![CDATA[
+			SELECT atc_no, atc_title, atc_content, atc_writer, atc_regdate, atc_hit, atc_commentcnt
+			FROM tbl_article
+			WHERE atc_no > 0
+			ORDER BY atc_no DESC, atc_regdate DESC
+		]]>
+	</select>
+	
+	<resultMap id="ArticleResultMap" type="ArticleVO">
+		<id property="articleNo" column="atc_no"></id>
+		<result property="title" column="atc_title"></result>
+		<result property="content" column="atc_content"></result>
+		<result property="writer" column="atc_writer"></result>
+		<result property="articleRegDate" column="atc_regdate"></result>
+		<result property="hit" column="atc_hit"></result>
+		<result property="commentCnt" column="atc_commentcnt"></result>
+	</resultMap>
+	
+</mapper>
