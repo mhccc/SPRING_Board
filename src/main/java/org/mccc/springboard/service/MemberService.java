@@ -12,4 +12,6 @@ public interface MemberService {
 	
 	public void deleteMember(String userid) throws Exception;
 	
+	public boolean loginCheck(MemberVO memberVO) throws Exception;
+	
 }

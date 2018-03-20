@@ -6,7 +6,9 @@ import javax.inject.Inject;
 
 import org.mccc.springboard.domain.ArticleVO;
 import org.mccc.springboard.persistence.ArticleDAO;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ArticleServiceImpl implements ArticleService {
 	
 	@Inject

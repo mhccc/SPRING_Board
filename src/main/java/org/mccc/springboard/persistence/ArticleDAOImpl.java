@@ -1,6 +1,5 @@
 package org.mccc.springboard.persistence;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;

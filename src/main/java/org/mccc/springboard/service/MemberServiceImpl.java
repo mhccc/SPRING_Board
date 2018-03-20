@@ -32,4 +32,12 @@ public class MemberServiceImpl implements MemberService {
 		memberDAO.deleteMember(userid);
 	}
 
+	@Override
+	public boolean loginCheck(MemberVO memberVO) throws Exception {
+		MemberVO inquiryMemberVO = memberDAO.readMember(memberVO.getUserid());
+		
+		//예외처리 하기
+		return memberVO.getPassword().equals(inquiryMemberVO.getPassword());
+	}
+
 }

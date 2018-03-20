@@ -7,9 +7,9 @@ import org.mccc.springboard.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("member/*")
@@ -20,34 +20,44 @@ public class MemberController {
 	@Inject
 	private MemberService memberService;
 	
-	//회원가입
+	//회원가입 GET
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public void joinGET() throws Exception {
+	public String joinGET() throws Exception {
 		logger.info("Member join get ...... ");
+		return "/member/join";
 	}
+	//회원가입 POST
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String joinPOST(MemberVO memberVO, Model model) throws Exception {
+	public String joinPOST(MemberVO memberVO, RedirectAttributes rttr) throws Exception {
 		logger.info("Member join post ...... ");
 		logger.info("MemberVO : " + memberVO.toString());
 
 		memberService.createMember(memberVO);
+		rttr.addFlashAttribute("result", "success");
 		
-		model.addAttribute("result", "success");
-		
-		return "/index";
+		return "redirect:/member/login";
 	}
 	
 	//아이디 중복 검사
 	//이메일 중복 검사
 
-	//로그인
+	//로그인 GET
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public void loginGET() throws Exception {
+	public String loginGET() throws Exception {
 		logger.info("Member login get ...... ");
+		return "/member/login";
 	}
+	//로그인 POST
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public void loginPOST(Model model) throws Exception {
+	public String loginPOST(MemberVO memberVO) throws Exception {
 		logger.info("Member login post ...... ");
+		logger.info("MemberVO : " + memberVO.toString());
+		
+		if (memberService.loginCheck(memberVO)) {
+			return "redirect:/";
+		}
+		
+		return "/member/login";
 	}
 	
 }
