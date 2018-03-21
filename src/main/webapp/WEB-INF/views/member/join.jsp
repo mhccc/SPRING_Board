@@ -8,51 +8,49 @@
 <body class="hold-transition register-page">
 
 
-
 	<div class="register-box">
 	
-	  <div class="register-logo">
-	    <a href="/"><b>MVC_Board</b></a>
-	  </div>
-	  <!-- /.register-logo -->
-	  
-	  <div class="register-box-body">
-	    <form action="join" method="post" onsubmit="return checkForm();">
-	      <div class="form-group has-feedback">
-	      	<label class="control-label" for="userid">아이디</label>
-	        <input type="text" id="userid" name="userid" class="form-control" maxlength="15" required autofocus>
-	        <span class="glyphicon glyphicon-user form-control-feedback" id="useridFeedback"></span>
-	        <div>
-	          	<h6 style="color:red;" id="useridCheckMessage"></h6>
-	        </div>
-	      </div>
-	      <div class="form-group has-feedback">
-	      	<label class="control-label" for="email">이메일</label>
-	        <input type="email" id="email" name="email" class="form-control" maxlength="30" required>
-	        <span class="glyphicon glyphicon-envelope form-control-feedback" id="emailFeedback"></span>
-	        <div>
-	          	<h6 style="color:red;" id="emailCheckMessage"></h6>
-	        </div>
-	      </div>
-	      <div class="form-group has-feedback">
-	      	<label class="control-label" for="password">비밀번호</label>
-	        <input type="password" id="password" name="password" class="form-control" maxlength="15" required>
-	        <span class="glyphicon glyphicon-lock form-control-feedback" id="passwordFeedback"></span>
-	        <div>
-	          	<h6 style="color:red;" id="passwordCheckMessage"></h6>
-	        </div>
-	      </div>
-	      <div class="form-group" style="margin-top: 20px;">
-	        <button type="submit" class="btn btn-primary btn-block btn-flat">회원가입</button>
-	      </div>
-	      <a href="/member/login" class="text-center">이미 회원이신가요?</a>
-	    </form>
-	  </div>
-	  <!-- /.form-box -->
+		<div class="register-logo">
+		 	<a href="/"><b>MVC_Board</b></a>
+		</div>
+	  	<!-- /.register-logo -->
+		
+	  	<div class="register-box-body">
+	    	<form action="join" method="post" onsubmit="return checkForm();">
+	      		<div class="form-group has-feedback">
+	      			<label class="control-label" for="userid">아이디</label>
+	        		<input type="text" id="userid" name="userid" class="form-control" maxlength="15" required autofocus>
+	        		<span class="glyphicon glyphicon-user form-control-feedback" id="useridFeedback"></span>
+	        		<div>
+	          			<h6 style="color:red;" id="useridCheckMessage"></h6>
+	        		</div>
+	      		</div>
+	      		<div class="form-group has-feedback">
+	      			<label class="control-label" for="email">이메일</label>
+	        		<input type="email" id="email" name="email" class="form-control" maxlength="30" required>
+	        		<span class="glyphicon glyphicon-envelope form-control-feedback" id="emailFeedback"></span>
+	       			<div>
+	          			<h6 style="color:red;" id="emailCheckMessage"></h6>
+	        		</div>
+	      		</div>
+	      		<div class="form-group has-feedback">
+	      			<label class="control-label" for="password">비밀번호</label>
+	        		<input type="password" id="password" name="password" class="form-control" maxlength="15" required>
+	        		<span class="glyphicon glyphicon-lock form-control-feedback" id="passwordFeedback"></span>
+	        		<div>
+	          			<h6 style="color:red;" id="passwordCheckMessage"></h6>
+	        		</div>
+	      		</div>
+	      		<div class="form-group" style="margin-top: 20px;">
+	        		<button type="submit" class="btn btn-primary btn-block btn-flat">회원가입</button>
+	      		</div>
+	      		<a href="/member/login" class="text-center">이미 회원이신가요?</a>
+	    	</form>
+	  	</div>
+	  	<!-- /.form-box -->
 	  
 	</div>
 	<!-- /.register-box -->
-
 
 
 <%@ include file="../include/plugin_js.jsp" %>
