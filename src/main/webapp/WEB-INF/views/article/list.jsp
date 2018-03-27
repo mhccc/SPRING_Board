@@ -53,7 +53,7 @@
 										<tr>
 											<td>${article.articleNo}</td>
 											<td><a href='/article/read?articleNo=${article.articleNo}'>${article.title}</a></td>
-											<td>${article.writer}</td>
+											<td>TEST</td>
 											<td><fmt:formatDate value="${article.articleRegDate}" pattern="yyyy-MM-dd HH:mm"/></td>
 											<td><span class="badge bg-red">${article.hit}</span></td>
 										</tr>
@@ -106,6 +106,14 @@
 
 <%@ include file="../include/plugin_js.jsp" %>
 <script>
+	
+	var result = '${result}';
+	
+	if (result == 'writeSuccess') {
+		alert("게시글 등록이 완료되었습니다.");
+	} else if (result == 'removeSuccess') {
+		alert("게시글 삭제가 완료되었습니다.");
+	}
 
 	$(function () {
 		$("#writeBtn").on("click", function () {

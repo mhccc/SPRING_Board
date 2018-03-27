@@ -21,10 +21,10 @@
 		
 			<!-- Content Header (Page header) -->
 		    <section class="content-header">
-		    	<h1>게시판 <small>글 작성</small></h1>
+		    	<h1>게시판 <small>글 수정</small></h1>
 		      	<ol class="breadcrumb">
-		        	<li><a href="#"><i class="fa fa-dashboard"></i>게시판</a></li>
-		        	<li class="active">글 작성</li>
+		        	<li><a href="/article/list"><i class="fa fa-dashboard"></i>게시판</a></li>
+		        	<li class="active">글 수정</li>
 		      	</ol>
 		    </section>
 	    	
@@ -35,14 +35,14 @@
 					<div class="col-md-12">
 						<div class="box box-info">
 					    	<div class="box-body pad">
-					        	<form role="form" action="/article/write" method="post">
-					            	<input type="hidden" name="writer" value="${sessionScope.authUser.mem_userid}">
+					        	<form role="form" method="post">
 					         		<div class="form-group">
 										<input type="text" name="title" class="form-control" placeholder="제목" value="${article.title}">
 					      			</div>
 					      			<textarea id="editor" name="content" rows="20" cols="80" placeholder="내용을 입력해주세요.">${article.content}</textarea>
 					      			<hr>
 					     			<div class="text-center" style="margin-bottom: 10px;">
+					     				<input type="hidden" name="articleNo" value="${article.articleNo}">
 					     				<button type="submit" id="registerBtn" class="btn btn-primary"><i class="fa fa-check-square-o" style="margin-right: 5px;"></i>저장</button>
 					  					<button type="button" id="cancelBtn" class="btn btn-warning"><i class="fa fa-undo" style="margin-right: 5px;"></i>취소</button>
 					     			</div>
@@ -82,6 +82,7 @@
 	 	});
 		
 		$("#registerBtn").on("click", function () {
+			formObj.attr("action", "/article/modify");
     		formObj.submit();
     	});
 		

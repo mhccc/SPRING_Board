@@ -46,7 +46,8 @@ public class ArticleController {
 		logger.info("ArticleVO : " + articleVO.toString());
 		
 		articleService.createArticle(articleVO);
-		rttr.addFlashAttribute("result", "success");
+		//view 수정할 필요 있음(modal 이용하여 성공 띄우기)
+		rttr.addFlashAttribute("result", "writeSuccess");
 		
 		return "redirect:/article/list";
 	}
@@ -77,15 +78,20 @@ public class ArticleController {
 		logger.info("ArticleVO : " + articleVO.toString());
 		
 		articleService.updateArticle(articleVO);
-		rttr.addFlashAttribute("result", "success");
+		//view 수정할 필요 있음(modal 이용하여 성공 띄우기)
+		rttr.addFlashAttribute("result", "modifySuccess");
 		
-		return "redirect:/article/read";
+		return "redirect:/article/read?articleNo=" + articleVO.getArticleNo();
 	}
 	
 	//삭제 POST
 	@RequestMapping(value = "/remove", method = RequestMethod.POST)
 	public String remove(@RequestParam("articleNo") int articleNo, RedirectAttributes rttr) throws Exception {
 		logger.info("Article remove post ...... ");
+		
+		articleService.deleteArticle(articleNo);
+		//view 수정할 필요 있음(modal 이용하여 성공 띄우기)
+		rttr.addFlashAttribute("result", "removeSuccess");
 		
 		return "redirect:/article/list";
 	}

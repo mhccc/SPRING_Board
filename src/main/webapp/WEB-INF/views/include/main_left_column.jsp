@@ -32,7 +32,7 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">메뉴</li>
       <!-- Optionally, you can add icons to the links -->
-      <li><a href="/article/list"><i class="fa fa-list"></i> <span>게시판</span></a></li>
+      <li><a href="/article/list"><i class="fa fa-list-alt"></i> <span>게시판</span></a></li>
       
       <%
       //<li class="treeview">

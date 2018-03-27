@@ -37,26 +37,31 @@
 						<div class="box box-info">
 							<div class="box-header with-border">
 								<h3 class="box-title">${article.title}</h3>
-								<small class="pull-right"><a href="#">${article.writer}</a></small>
 							</div>
+							<div class="box-header">
+					            <div class="user-block">
+					                <img class="img-circle img-bordered-sm" src="../resources/dist/img/user1-128x128.jpg" alt="user image">
+					                <span class="username">
+					                    <a href="#">TEST</a>
+					                </span>
+					                <span class="description"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${article.articleRegDate}"/></span>
+					            </div>
+					        </div>
 							<div class="box-body pad">
-								<div class="text-right">
-									<small>
-										<span style="margin-right:10px;">
-											Hit : ${article.hit}
-										</span>
-										<fmt:formatDate value="${article.articleRegDate}" pattern="yyyy-MM-dd HH:mm"/>
-									</small>
-								</div>
 								<div>
 									${article.content}
 							    </div>
 							</div>
 							<div class="box-footer clearfix">
+								<form role="form" method="post">
+					                <input type="hidden" name="articleNo" value="${article.articleNo}">
+					            </form>
 							    <button id="listBtn" class="btn btn-primary"><i class="fa fa-list" style="margin-right: 5px;"></i>목록</button>
 								<c:if test="${article.writer eq article.writer}">
-									<button id="deleteBtn" class="btn btn-danger pull-right"><i class="fa fa-trash" style="margin-right: 5px;"></i>삭제</button>
-									<button id="modifyBtn" class="btn btn-warning pull-right" style="margin-right:5px;"><i class="fa fa-undo" style="margin-right: 5px;"></i>수정</button>
+									<div class="pull-right">
+										<button id="modifyBtn" class="btn btn-warning"><i class="fa fa-undo" style="margin-right: 5px;"></i>수정</button>
+										<button id="deleteBtn" class="btn btn-danger"><i class="fa fa-trash" style="margin-right: 5px;"></i>삭제</button>
+									</div>
 								</c:if>
 							</div>
 						</div>
@@ -82,17 +87,28 @@
 <%@ include file="../include/plugin_js.jsp" %>
 <script>
 
+	var result = '${result}';
+
+	if (result == 'modifySuccess') {
+		alert("게시글 수정이 완료되었습니다.");
+	}
+
+	var formObj = $("form[role='form']");
+
 	$(function () {
 		$("#listBtn").on("click", function () {
-			self.location = "/article/list"
-    	});
-		
-		$("#deleteBtn").on("click", function () {
-			self.location = "/article/delete"
+			self.location = "/article/list";
     	});
 		
 		$("#modifyBtn").on("click", function () {
-			self.location = "/article/modify"
+			formObj.attr("action", "/article/modify");
+			formObj.attr("method", "get");
+			formObj.submit();
+    	});
+		
+		$("#deleteBtn").on("click", function () {
+			formObj.attr("action", "/article/remove");
+			formObj.submit();
     	});
 	})
   
