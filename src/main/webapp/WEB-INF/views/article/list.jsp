@@ -39,11 +39,11 @@
 							<div class="box-body pad">
 								<table class="table table-bordered text-center">
 									<tr>
-										<th style="width: 8%">번호</th>
-										<th style="width: 60%">제목</th>
-										<th style="width: 12%">작성자</th>
-										<th style="width: 14%">날짜</th>
-										<th style="width: 16%">조회수</th>
+										<th style="width: 50px">번호</th>
+										<th>제목</th>
+										<th style="width: 100px">작성자</th>
+										<th style="width: 150px">작성일</th>
+										<th style="width: 60px">조회</th>
 									</tr>
 									<c:if test="${empty list}">
 										<td colspan="5">게시글이 없습니다.</td>
@@ -52,33 +52,31 @@
 									<c:forEach var="article" items="${list}">
 										<tr>
 											<td>${article.articleNo}</td>
-											<td><a href='/article/read?articleNo=${article.articleNo}'>${article.title}</a></td>
-											<td>TEST</td>
+											<td><a href='/article/read?articleNo=${article.articleNo}' style="margin-right: 3px">${article.title}</a> [${article.commentCnt}]</td>
+											<td>${article.writer}</td>
 											<td><fmt:formatDate value="${article.articleRegDate}" pattern="yyyy-MM-dd HH:mm"/></td>
 											<td><span class="badge bg-red">${article.hit}</span></td>
 										</tr>
 									</c:forEach>
 								</table>
-								<% /*
 								<!-- paging -->
-								<c:if test="${articlePage.hasArticles()}">
+								<c:if test="${true}">
 									<div class="text-center">
-										<ul class="pagination">
-											<c:if test="${articlePage.startPage > 10}">
-												<li><a href="list.do?pageNo=${articlePage.startPage - 10}">&laquo;</a></li>
+										<ul class="pagination" style="margin-bottom: 10px">
+											<c:if test="${pageMaker.prev}">
+												<li><a href="list?page=${pageMaker.startPage - 1}">&laquo;</a></li>
 											</c:if>
-											<c:forEach var="pNo" begin="${articlePage.startPage}" end="${articlePage.endPage}">
-												<li <c:out value="${articlePage.currentPage == pNo? 'class=active' : ''}"/>>
-													<a href="list?pageNo=${pNo}">${pNo}</a>
+											<c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+												<li <c:out value="${pageMaker.criteria.page == idx? 'class=active' : ''}"/>>
+													<a href="list?page=${idx}">${idx}</a>
 												</li>
 											</c:forEach>
-											<c:if test="${articlePage.endPage < articlePage.totalPages}">
-												<li><a href="list?pageNo=${articlePage.startPage + 10}">&raquo;</a></li>
+											<c:if test="${pageMaker.next}">
+												<li><a href="list?page=${pageMaker.endPage + 1}">&raquo;</a></li>
 											</c:if>
 										</ul>
 									</div>
 								</c:if>
-								*/ %>
 							</div>
 							<!-- /.box-body -->
 							<div class="box-footer clearfix">

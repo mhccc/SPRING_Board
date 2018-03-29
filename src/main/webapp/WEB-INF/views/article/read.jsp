@@ -42,7 +42,7 @@
 					            <div class="user-block">
 					                <img class="img-circle img-bordered-sm" src="../resources/dist/img/user1-128x128.jpg" alt="user image">
 					                <span class="username">
-					                    <a href="#">TEST</a>
+					                    <a href="#">${article.writer}</a>
 					                </span>
 					                <span class="description"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${article.articleRegDate}"/></span>
 					            </div>

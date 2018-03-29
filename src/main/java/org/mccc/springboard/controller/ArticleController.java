@@ -3,6 +3,8 @@ package org.mccc.springboard.controller;
 import javax.inject.Inject;
 
 import org.mccc.springboard.domain.ArticleVO;
+import org.mccc.springboard.domain.Criteria;
+import org.mccc.springboard.domain.PageMaker;
 import org.mccc.springboard.service.ArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,11 +26,16 @@ public class ArticleController {
 	
 	//리스트 GET
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model) throws Exception {
+	public String list(Criteria criteria, Model model) throws Exception {
 		logger.info("Article list get ...... ");
 		
-		model.addAttribute("list", articleService.listAllArticle());
-
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(5000);
+		
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("list", articleService.listCriteria(criteria));
+		
 		return "/article/list";
 	}
 	

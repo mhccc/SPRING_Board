@@ -1,10 +1,13 @@
 package org.mccc.springboard.test.persistence;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mccc.springboard.domain.ArticleVO;
+import org.mccc.springboard.domain.Criteria;
 import org.mccc.springboard.persistence.ArticleDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +26,14 @@ public class ArticleDAOTest {
 	
 	@Test
 	public void testCreate() throws Exception {
-		ArticleVO articleVO = new ArticleVO("TEST", "TEST", "TEST");
-		articleDAO.createArticle(articleVO);
+		for (int i=0; i<5000; i++) {
+			ArticleVO articleVO = new ArticleVO();
+			articleVO.setTitle((i + 1) + "번째 글 제목입니다...");
+			articleVO.setContent((i + 1) + "번째 글 내용입니다...");
+			articleVO.setWriter("User0" + (i % 10));
+			
+			articleDAO.createArticle(articleVO);
+		}
 	}
 	
 	@Test
@@ -35,7 +44,7 @@ public class ArticleDAOTest {
 	
 	@Test
 	public void testUpdate() throws Exception {
-		ArticleVO articleVO = new ArticleVO("MODTEST", "MODTEST", "MODTEST");
+		ArticleVO articleVO = new ArticleVO("수정된 글 제목입니다...", "수정된 글 내용입니다...", "userMOD");
 		articleVO.setArticleNo(1);
 		articleDAO.updateArticle(articleVO);
 	}
@@ -47,7 +56,15 @@ public class ArticleDAOTest {
 	}
 	
 	@Test
-	public void testListAll() throws Exception {
-		articleDAO.listAllArticle();
+	public void testList() throws Exception {
+		Criteria criteria = new Criteria();
+		criteria.setPage(3);
+		criteria.setPerPageNum(20);
+		
+		List<ArticleVO> list = articleDAO.listCriteria(criteria);
+		
+		for (ArticleVO articleVO : list) {
+			logger.info(articleVO.getArticleNo() + " : " + articleVO.getTitle());
+		}
 	}
 }

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.mccc.springboard.domain.ArticleVO;
+import org.mccc.springboard.domain.Criteria;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -36,8 +37,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 	}
 
 	@Override
-	public List<ArticleVO> listAllArticle() throws Exception {
-		return sqlSession.selectList(NAMESPACE + ".listAllArticle");
+	public List<ArticleVO> listCriteria(Criteria criteria) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listCriteria", criteria);
 	}
 
 }

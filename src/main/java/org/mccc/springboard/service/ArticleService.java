@@ -3,6 +3,7 @@ package org.mccc.springboard.service;
 import java.util.List;
 
 import org.mccc.springboard.domain.ArticleVO;
+import org.mccc.springboard.domain.Criteria;
 
 public interface ArticleService {
 
@@ -14,6 +15,6 @@ public interface ArticleService {
 	
 	public void deleteArticle(int articleNo) throws Exception;
 	
-	public List<ArticleVO> listAllArticle() throws Exception;
+	public List<ArticleVO> listCriteria(Criteria criteria) throws Exception;
 	
 }

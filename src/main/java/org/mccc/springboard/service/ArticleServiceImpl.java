@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.mccc.springboard.domain.ArticleVO;
+import org.mccc.springboard.domain.Criteria;
 import org.mccc.springboard.persistence.ArticleDAO;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +36,8 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<ArticleVO> listAllArticle() throws Exception {
-		return articleDAO.listAllArticle();
+	public List<ArticleVO> listCriteria(Criteria criteria) throws Exception {
+		return articleDAO.listCriteria(criteria);
 	}
 
 }

@@ -28,12 +28,13 @@
 		WHERE atc_no = #{articleNo}
 	</delete>
 	
-	<select id="listAllArticle" resultMap="ArticleResultMap">
+	<select id="listCriteria" resultMap="ArticleResultMap">
 		<![CDATA[
 			SELECT atc_no, atc_title, atc_content, atc_writer, atc_regdate, atc_hit, atc_commentcnt
 			FROM tbl_article
 			WHERE atc_no > 0
 			ORDER BY atc_no DESC, atc_regdate DESC
+			LIMIT #{pageStart}, #{perPageNum}
 		]]>
 	</select>
 	
