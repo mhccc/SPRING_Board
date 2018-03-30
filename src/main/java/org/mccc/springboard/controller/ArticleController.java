@@ -31,10 +31,10 @@ public class ArticleController {
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);
-		pageMaker.setTotalCount(5000);
+		pageMaker.setTotalCount(articleService.countArticles());
 		
+		model.addAttribute("list", articleService.listCriteria(criteria));	
 		model.addAttribute("pageMaker", pageMaker);
-		model.addAttribute("list", articleService.listCriteria(criteria));
 		
 		return "/article/list";
 	}
