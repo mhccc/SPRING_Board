@@ -42,7 +42,9 @@
 					      			<textarea id="editor" name="content" rows="20" cols="80" placeholder="내용을 입력해주세요.">${article.content}</textarea>
 					      			<hr>
 					     			<div class="text-center" style="margin-bottom: 10px;">
-					     				<input type="hidden" name="articleNo" value="${article.articleNo}">
+					     				<input type="hidden" name="page" value="${criteria.page}">
+										<input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+						                <input type="hidden" name="articleNo" value="${article.articleNo}">
 					     				<button type="submit" id="registerBtn" class="btn btn-primary"><i class="fa fa-check-square-o" style="margin-right: 5px;"></i>저장</button>
 					  					<button type="button" id="cancelBtn" class="btn btn-warning"><i class="fa fa-undo" style="margin-right: 5px;"></i>취소</button>
 					     			</div>

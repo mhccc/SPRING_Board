@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,7 +62,7 @@ public class ArticleController {
 	
 	//읽기 GET
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
-	public String read(@RequestParam("articleNo") int articleNo, Model model) throws Exception {
+	public String read(@RequestParam("articleNo") int articleNo, @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
 		logger.info("Article read get ...... ");
 		
 		model.addAttribute("article", articleService.readArticle(articleNo));
@@ -71,7 +72,7 @@ public class ArticleController {
 	
 	//수정 GET
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public String modifyGET(@RequestParam("articleNo") int articleNo, Model model) throws Exception {
+	public String modifyGET(@RequestParam("articleNo") int articleNo, @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
 		logger.info("Article modify get ...... ");
 		
 		model.addAttribute("article", articleService.readArticle(articleNo));
@@ -80,24 +81,29 @@ public class ArticleController {
 	}
 	//수정 POST
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modifyPOST(ArticleVO articleVO, RedirectAttributes rttr) throws Exception {
+	public String modifyPOST(ArticleVO articleVO, Criteria criteria, RedirectAttributes rttr) throws Exception {
 		logger.info("Article write get ...... ");
 		logger.info("ArticleVO : " + articleVO.toString());
 		
 		articleService.updateArticle(articleVO);
 		//view 수정할 필요 있음(modal 이용하여 성공 띄우기)
+		rttr.addAttribute("page", criteria.getPage());
+		rttr.addAttribute("perPageNum", criteria.getPerPageNum());
+		rttr.addAttribute("articleNo", articleVO.getArticleNo());
 		rttr.addFlashAttribute("result", "modifySuccess");
 		
-		return "redirect:/article/read?articleNo=" + articleVO.getArticleNo();
+		return "redirect:/article/read";
 	}
 	
 	//삭제 POST
 	@RequestMapping(value = "/remove", method = RequestMethod.POST)
-	public String remove(@RequestParam("articleNo") int articleNo, RedirectAttributes rttr) throws Exception {
+	public String remove(@RequestParam("articleNo") int articleNo, Criteria criteria, RedirectAttributes rttr) throws Exception {
 		logger.info("Article remove post ...... ");
 		
 		articleService.deleteArticle(articleNo);
 		//view 수정할 필요 있음(modal 이용하여 성공 띄우기)
+		rttr.addAttribute("page", criteria.getPage());
+		rttr.addAttribute("perPageNum", criteria.getPerPageNum());
 		rttr.addFlashAttribute("result", "removeSuccess");
 		
 		return "redirect:/article/list";

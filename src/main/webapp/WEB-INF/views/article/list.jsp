@@ -52,7 +52,7 @@
 									<c:forEach var="article" items="${list}">
 										<tr>
 											<td>${article.articleNo}</td>
-											<td><a href='/article/read?articleNo=${article.articleNo}' style="margin-right: 3px">${article.title}</a> [${article.commentCnt}]</td>
+											<td><a href='/article/read${pageMaker.makeQuery(pageMaker.criteria.page)}&articleNo=${article.articleNo}' style="margin-right: 3px">${article.title}</a> [${article.commentCnt}]</td>
 											<td>${article.writer}</td>
 											<td><fmt:formatDate value="${article.articleRegDate}" pattern="yyyy-MM-dd HH:mm"/></td>
 											<td><span class="badge bg-red">${article.hit}</span></td>
@@ -64,15 +64,15 @@
 									<div class="text-center">
 										<ul class="pagination" style="margin-bottom: 10px">
 											<c:if test="${pageMaker.prev}">
-												<li><a href="list?page=${pageMaker.startPage - 1}">&laquo;</a></li>
+												<li><a href="list${pageMaker.makeQuery(pageMaker.startPage - 1)}">&laquo;</a></li>
 											</c:if>
 											<c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 												<li <c:out value="${pageMaker.criteria.page == idx? 'class=active' : ''}"/>>
-													<a href="list?page=${idx}">${idx}</a>
+													<a href="list${pageMaker.makeQuery(idx)}">${idx}</a>
 												</li>
 											</c:forEach>
 											<c:if test="${pageMaker.next}">
-												<li><a href="list?page=${pageMaker.endPage + 1}">&raquo;</a></li>
+												<li><a href="list${pageMaker.makeQuery(pageMaker.endPage + 1)}">&raquo;</a></li>
 											</c:if>
 										</ul>
 									</div>

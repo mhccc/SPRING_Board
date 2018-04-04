@@ -54,6 +54,8 @@
 							</div>
 							<div class="box-footer clearfix">
 								<form role="form" method="post">
+									<input type="hidden" name="page" value="${criteria.page}">
+									<input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
 					                <input type="hidden" name="articleNo" value="${article.articleNo}">
 					            </form>
 							    <button id="listBtn" class="btn btn-primary"><i class="fa fa-list" style="margin-right: 5px;"></i>목록</button>
@@ -97,7 +99,9 @@
 
 	$(function () {
 		$("#listBtn").on("click", function () {
-			self.location = "/article/list";
+			formObj.attr("action", "/article/list");
+			formObj.attr("method", "get");
+			formObj.submit();
     	});
 		
 		$("#modifyBtn").on("click", function () {
