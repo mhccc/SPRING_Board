@@ -71,7 +71,7 @@
 													<a href="list${pageMaker.makeQuery(idx)}">${idx}</a>
 												</li>
 											</c:forEach>
-											<c:if test="${pageMaker.next}">
+											<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 												<li><a href="list${pageMaker.makeQuery(pageMaker.endPage + 1)}">&raquo;</a></li>
 											</c:if>
 										</ul>
@@ -80,7 +80,25 @@
 							</div>
 							<!-- /.box-body -->
 							<div class="box-footer clearfix">
-								<button id="writeBtn" class="btn btn-primary pull-right"><i class="fa fa-edit" style="margin-right: 5px;"></i>글 작성</button>
+							    <div class="form-group col-sm-2" style="margin-top: 15px;">
+							        <select class="form-control" name="searchType" id="searchType">
+							            <option value="t" <c:out value="${criteria.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
+							            <option value="c" <c:out value="${criteria.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
+							            <option value="tc" <c:out value="${criteria.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
+							            <option value="w" <c:out value="${criteria.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
+							        </select>
+							    </div>
+							    <div class="form-group col-sm-4" style="margin-top: 15px;">
+							        <div class="input-group">
+							            <input type="text" class="form-control" name="keyword" id="keywordInput" value="${criteria.keyword}" placeholder="검색어">
+							            <span class="input-group-btn">
+							                <button type="button" class="btn btn-primary" id="searchBtn"><i class="fa fa-search" style="margin-right: 5px;"></i>검색</button>
+							            </span>
+							        </div>
+							    </div>
+							    <div class="pull-right col-sm-4" style="margin: 15px 0px 15px 0px;">
+							        <button id="writeBtn" class="btn btn-primary pull-right"><i class="fa fa-edit" style="margin-right: 5px;"></i>글 작성</button>
+							    </div>
 							</div>
 							<!-- /.box-footer -->
 						</div>
@@ -118,6 +136,12 @@
     		self.location = "/article/write"
     	});
 	})
+	
+	$(function () {
+	    $("#searchBtn").on("click", function () {
+	        self.location = "/article/list${pageMaker.makeQuery(1)}"
+		});
+    });
   
 </script>
 

@@ -27,12 +27,12 @@ public class ArticleController {
 	
 	//리스트 GET
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Criteria criteria, Model model) throws Exception {
+	public String list(@ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
 		logger.info("Article list get ...... ");
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);
-		pageMaker.setTotalCount(articleService.countArticles());
+		pageMaker.setTotalCount(articleService.countArticles(criteria));
 		
 		model.addAttribute("list", articleService.listCriteria(criteria));	
 		model.addAttribute("pageMaker", pageMaker);

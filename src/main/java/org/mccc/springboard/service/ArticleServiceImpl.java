@@ -41,8 +41,8 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public int countArticles() throws Exception {
-		return articleDAO.countArticles();
+	public int countArticles(Criteria criteria) throws Exception {
+		return articleDAO.countArticles(criteria);
 	}
 
 }

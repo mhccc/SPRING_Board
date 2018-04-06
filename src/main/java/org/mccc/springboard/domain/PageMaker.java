@@ -1,5 +1,8 @@
 package org.mccc.springboard.domain;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -29,9 +32,11 @@ public class PageMaker {
 		UriComponents uriComponents = UriComponentsBuilder.newInstance()
 				.queryParam("page", page)
 				.queryParam("perPageNum", criteria.getPerPageNum())
+				.queryParam("searchType", criteria.getSearchType())
+				.queryParam("keyword", encoding(criteria.getKeyword()))
 				.build();
 		
-		return uriComponents.toString();
+		return uriComponents.toUriString();
 	}
 	
 	private void calcData() {
@@ -44,6 +49,18 @@ public class PageMaker {
 		
 		prev = startPage == 1 ? false : true;
 		next = endPage * criteria.getPerPageNum() >= totalCount ? false : true;
+	}
+	
+	private String encoding(String keyword) {
+		if (keyword == null || keyword.trim().length() == 0) {
+			return "";
+		}
+
+		try {
+			return URLEncoder.encode(keyword, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			return "";
+		}
 	}
 
 	public int getStartPage() {

@@ -17,6 +17,6 @@ public interface ArticleDAO {
 	
 	public List<ArticleVO> listCriteria(Criteria criteria) throws Exception;
 	
-	public int countArticles() throws Exception;
+	public int countArticles(Criteria criteria) throws Exception;
 	
 }
