@@ -80,25 +80,29 @@
 							</div>
 							<!-- /.box-body -->
 							<div class="box-footer clearfix">
-							    <div class="form-group col-sm-2" style="margin-top: 15px;">
-							        <select class="form-control" name="searchType" id="searchType">
-							            <option value="t" <c:out value="${criteria.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
-							            <option value="c" <c:out value="${criteria.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
-							            <option value="tc" <c:out value="${criteria.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
-							            <option value="w" <c:out value="${criteria.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
-							        </select>
-							    </div>
-							    <div class="form-group col-sm-4" style="margin-top: 15px;">
-							        <div class="input-group">
-							            <input type="text" class="form-control" name="keyword" id="keywordInput" value="${criteria.keyword}" placeholder="검색어">
-							            <span class="input-group-btn">
-							                <button type="button" class="btn btn-primary" id="searchBtn"><i class="fa fa-search" style="margin-right: 5px;"></i>검색</button>
-							            </span>
-							        </div>
-							    </div>
-							    <div class="pull-right col-sm-4" style="margin: 15px 0px 15px 0px;">
-							        <button id="writeBtn" class="btn btn-primary pull-right"><i class="fa fa-edit" style="margin-right: 5px;"></i>글 작성</button>
-							    </div>
+								<form role="form" method="get">
+									<div class="form-group col-sm-2" style="margin-top: 15px;">
+										<input type="hidden" name="page" value="${criteria.page}">
+								        <input type="hidden" name="perPageNum" value="${criteria.perPageNum}"> 
+								        <select class="form-control" name="searchType" id="searchType">
+								            <option value="t" <c:out value="${criteria.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
+								            <option value="c" <c:out value="${criteria.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
+								            <option value="tc" <c:out value="${criteria.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
+								            <option value="w" <c:out value="${criteria.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
+								        </select>
+								    </div>
+								    <div class="form-group col-sm-4" style="margin-top: 15px;">
+								        <div class="input-group">
+								            <input type="text" class="form-control" name="keyword" id="keywordInput" value="${criteria.keyword}" placeholder="검색어">
+								            <span class="input-group-btn">
+								                <button type="button" class="btn btn-primary" id="searchBtn"><i class="fa fa-search" style="margin-right: 5px;"></i>검색</button>
+								            </span>
+								        </div>
+								    </div>
+								    <div class="pull-right col-sm-4" style="margin: 15px 0px 15px 0px;">
+								        <button id="writeBtn" class="btn btn-primary pull-right"><i class="fa fa-edit" style="margin-right: 5px;"></i>글 작성</button>
+								    </div>
+								</form>
 							</div>
 							<!-- /.box-footer -->
 						</div>
@@ -124,24 +128,26 @@
 <script>
 	
 	var result = '${result}';
+	var formObj = $("form[role='form']");
 	
 	if (result == 'writeSuccess') {
 		alert("게시글 등록이 완료되었습니다.");
 	} else if (result == 'removeSuccess') {
 		alert("게시글 삭제가 완료되었습니다.");
 	}
+	
+	$(function () {
+	    $("#searchBtn").on("click", function () {
+	    	formObj.attr("action", "/article/list");
+    		formObj.submit();
+		});
+    });
 
 	$(function () {
 		$("#writeBtn").on("click", function () {
     		self.location = "/article/write"
     	});
 	})
-	
-	$(function () {
-	    $("#searchBtn").on("click", function () {
-	        self.location = "/article/list${pageMaker.makeQuery(1)}"
-		});
-    });
   
 </script>
 

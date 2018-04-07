@@ -90,4 +90,5 @@ public class ArticleDAOTest {
 		logger.info(uriComponents1.toString());
 		logger.info(uriComponents2.toString());
 	}
+	
 }

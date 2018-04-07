@@ -28,17 +28,6 @@ public class PageMaker {
 		calcData();
 	}
 	
-	public String makeQuery(int page) {
-		UriComponents uriComponents = UriComponentsBuilder.newInstance()
-				.queryParam("page", page)
-				.queryParam("perPageNum", criteria.getPerPageNum())
-				.queryParam("searchType", criteria.getSearchType())
-				.queryParam("keyword", encoding(criteria.getKeyword()))
-				.build();
-		
-		return uriComponents.toUriString();
-	}
-	
 	private void calcData() {
 		endPage = (int) (Math.ceil((criteria.getPage() / (double) displayPageNum )) * displayPageNum);
 		startPage = (endPage - displayPageNum) + 1;
@@ -49,6 +38,17 @@ public class PageMaker {
 		
 		prev = startPage == 1 ? false : true;
 		next = endPage * criteria.getPerPageNum() >= totalCount ? false : true;
+	}
+	
+	public String makeQuery(int page) {
+		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+				.queryParam("page", page)
+				.queryParam("perPageNum", criteria.getPerPageNum())
+				.queryParam("searchType", criteria.getSearchType())
+				.queryParam("keyword", encoding(criteria.getKeyword()))
+				.build();
+		
+		return uriComponents.toUriString();
 	}
 	
 	private String encoding(String keyword) {

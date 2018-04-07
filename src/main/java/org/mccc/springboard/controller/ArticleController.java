@@ -29,6 +29,7 @@ public class ArticleController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(@ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
 		logger.info("Article list get ...... ");
+		logger.info(criteria.toString());
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);

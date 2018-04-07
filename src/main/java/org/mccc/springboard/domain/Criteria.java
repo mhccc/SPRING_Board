@@ -10,8 +10,8 @@ public class Criteria {
 	public Criteria() {
 		this.page = 1;
 		this.perPageNum = 10;
-		this.searchType = null;
-		this.keyword = null;
+		this.searchType = "";
+		this.keyword = "";
 	}
 	
 	public int getPage() {
