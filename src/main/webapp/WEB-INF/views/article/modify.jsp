@@ -44,6 +44,8 @@
 					     			<div class="text-center" style="margin-bottom: 10px;">
 					     				<input type="hidden" name="page" value="${criteria.page}">
 										<input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+										<input type="hidden" name="searchType" value="${criteria.searchType}">
+										<input type="hidden" name="keyword" value="${criteria.keyword}">
 						                <input type="hidden" name="articleNo" value="${article.articleNo}">
 					     				<button type="submit" id="registerBtn" class="btn btn-primary"><i class="fa fa-check-square-o" style="margin-right: 5px;"></i>저장</button>
 					  					<button type="button" id="cancelBtn" class="btn btn-warning"><i class="fa fa-undo" style="margin-right: 5px;"></i>취소</button>
@@ -83,12 +85,12 @@
 	 		height: 480
 	 	});
 		
-		$("#registerBtn").on("click", function () {
-			formObj.attr("action", "/article/modify");
+		$('#registerBtn').on('click', function () {
+			formObj.attr('action', '/article/modify');
     		formObj.submit();
     	});
 		
-		$("#cancelBtn").on("click", function () {
+		$('#cancelBtn').on('click', function () {
 			history.go(-1);
     	});
 	})

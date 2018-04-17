@@ -91,4 +91,24 @@ public class ArticleDAOTest {
 		logger.info(uriComponents2.toString());
 	}
 	
+	@Test
+	public void testDynamicSQL() throws Exception {
+		Criteria criteria = new Criteria();
+		criteria.setPage(1);
+		criteria.setSearchType("t");
+		criteria.setKeyword("");
+		
+		logger.info("====================================================");
+		
+		List<ArticleVO> list = articleDAO.listCriteria(criteria);
+		
+		for (ArticleVO articleVO : list) {
+			logger.info(articleVO.getArticleNo() + ": " + articleVO.getTitle());
+		}
+
+		logger.info("====================================================");
+		
+		logger.info("COUNT: " + articleDAO.countArticles(criteria));
+	}
+	
 }

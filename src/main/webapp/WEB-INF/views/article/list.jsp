@@ -82,7 +82,7 @@
 							<div class="box-footer clearfix">
 								<form role="form" method="get">
 									<div class="form-group col-sm-2" style="margin-top: 15px;">
-										<input type="hidden" name="page" value="${criteria.page}">
+										<input type="hidden" name="page" value=1>
 								        <input type="hidden" name="perPageNum" value="${criteria.perPageNum}"> 
 								        <select class="form-control" name="searchType" id="searchType">
 								            <option value="t" <c:out value="${criteria.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
@@ -131,21 +131,25 @@
 	var formObj = $("form[role='form']");
 	
 	if (result == 'writeSuccess') {
-		alert("게시글 등록이 완료되었습니다.");
+		alert('게시글 등록이 완료되었습니다.');
 	} else if (result == 'removeSuccess') {
-		alert("게시글 삭제가 완료되었습니다.");
+		alert('게시글 삭제가 완료되었습니다.');
 	}
 	
 	$(function () {
-	    $("#searchBtn").on("click", function () {
-	    	formObj.attr("action", "/article/list");
-    		formObj.submit();
+	    $('#searchBtn').on('click', function () {
+	    	if ($.trim($('#keywordInput').val()) == '') {
+	    		alert('검색어를 입력해주세요.');
+	    	} else {
+	    		formObj.attr('action', '/article/list');
+	    		formObj.submit();
+	    	}
 		});
     });
 
 	$(function () {
-		$("#writeBtn").on("click", function () {
-    		self.location = "/article/write"
+		$('#writeBtn').on('click', function () {
+    		self.location = '/article/write'
     	});
 	})
   

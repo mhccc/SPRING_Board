@@ -81,12 +81,12 @@
 	 		height: 480
 	 	});
 		
-		$("#registerBtn").on("click", function () {
-			formObj.attr("action", "/article/write");
+		$('#registerBtn').on('click', function () {
+			formObj.attr('action', '/article/write');
     		formObj.submit();
     	});
 		
-		$("#cancelBtn").on("click", function () {
+		$('#cancelBtn').on('click', function () {
 			history.go(-1);
     	});
 	})

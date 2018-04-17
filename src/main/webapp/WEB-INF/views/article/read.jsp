@@ -56,6 +56,8 @@
 								<form role="form" method="post">
 									<input type="hidden" name="page" value="${criteria.page}">
 									<input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+									<input type="hidden" name="searchType" value="${criteria.searchType}">
+									<input type="hidden" name="keyword" value="${criteria.keyword}">
 					                <input type="hidden" name="articleNo" value="${article.articleNo}">
 					            </form>
 							    <button id="listBtn" class="btn btn-primary"><i class="fa fa-list" style="margin-right: 5px;"></i>목록</button>
@@ -92,26 +94,26 @@
 	var result = '${result}';
 
 	if (result == 'modifySuccess') {
-		alert("게시글 수정이 완료되었습니다.");
+		alert('게시글 수정이 완료되었습니다.');
 	}
 
 	var formObj = $("form[role='form']");
 
 	$(function () {
-		$("#listBtn").on("click", function () {
-			formObj.attr("action", "/article/list");
-			formObj.attr("method", "get");
+		$('#listBtn').on('click', function () {
+			formObj.attr('action', '/article/list');
+			formObj.attr('method', 'get');
 			formObj.submit();
     	});
 		
-		$("#modifyBtn").on("click", function () {
-			formObj.attr("action", "/article/modify");
-			formObj.attr("method", "get");
+		$('#modifyBtn').on('click', function () {
+			formObj.attr('action', '/article/modify');
+			formObj.attr('method', 'get');
 			formObj.submit();
     	});
 		
-		$("#deleteBtn").on("click", function () {
-			formObj.attr("action", "/article/remove");
+		$('#deleteBtn').on('click', function () {
+			formObj.attr('action', '/article/remove');
 			formObj.submit();
     	});
 	})

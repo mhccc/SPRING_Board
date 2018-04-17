@@ -51,7 +51,7 @@ public class ArticleController {
 	//쓰기 POST
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String writePOST(ArticleVO articleVO, RedirectAttributes rttr) throws Exception {
-		logger.info("Article write get ...... ");
+		logger.info("Article write post ...... ");
 		logger.info("ArticleVO : " + articleVO.toString());
 		
 		articleService.createArticle(articleVO);
@@ -83,13 +83,14 @@ public class ArticleController {
 	//수정 POST
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String modifyPOST(ArticleVO articleVO, Criteria criteria, RedirectAttributes rttr) throws Exception {
-		logger.info("Article write get ...... ");
-		logger.info("ArticleVO : " + articleVO.toString());
+		logger.info("Article modify post ...... ");
 		
 		articleService.updateArticle(articleVO);
 		//view 수정할 필요 있음(modal 이용하여 성공 띄우기)
 		rttr.addAttribute("page", criteria.getPage());
 		rttr.addAttribute("perPageNum", criteria.getPerPageNum());
+		rttr.addAttribute("searchType", criteria.getSearchType());
+		rttr.addAttribute("keyword", criteria.getKeyword());
 		rttr.addAttribute("articleNo", articleVO.getArticleNo());
 		rttr.addFlashAttribute("result", "modifySuccess");
 		
@@ -105,6 +106,8 @@ public class ArticleController {
 		//view 수정할 필요 있음(modal 이용하여 성공 띄우기)
 		rttr.addAttribute("page", criteria.getPage());
 		rttr.addAttribute("perPageNum", criteria.getPerPageNum());
+		rttr.addAttribute("searchType", criteria.getSearchType());
+		rttr.addAttribute("keyword", criteria.getKeyword());
 		rttr.addFlashAttribute("result", "removeSuccess");
 		
 		return "redirect:/article/list";
