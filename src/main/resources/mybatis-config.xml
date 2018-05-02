@@ -8,6 +8,7 @@
 	<typeAliases>
 		<typeAlias type="org.mccc.springboard.domain.MemberVO" alias="MemberVO" />
 		<typeAlias type="org.mccc.springboard.domain.ArticleVO" alias="ArticleVO" />
+		<typeAlias type="org.mccc.springboard.domain.ReplyVO" alias="ReplyVO" />
 	</typeAliases>
 
 </configuration>

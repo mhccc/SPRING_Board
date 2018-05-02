@@ -17,8 +17,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(
-		locations={ "file:src/main/webapp/WEB-INF/spring/**/root-context.xml" })
+@ContextConfiguration(locations={ "file:src/main/webapp/WEB-INF/spring/**/root-context.xml" })
 public class ArticleDAOTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(ArticleDAOTest.class);
@@ -27,7 +26,7 @@ public class ArticleDAOTest {
 	private ArticleDAO articleDAO;
 	
 	@Test
-	public void testCreate() throws Exception {
+	public void testCreateArticle() throws Exception {
 		for (int i=0; i<5000; i++) {
 			ArticleVO articleVO = new ArticleVO();
 			articleVO.setTitle((i + 1) + "번째 글 제목입니다...");
@@ -39,26 +38,7 @@ public class ArticleDAOTest {
 	}
 	
 	@Test
-	public void testRead() throws Exception {
-		int articleNo = 1;
-		articleDAO.readArticle(articleNo);
-	}
-	
-	@Test
-	public void testUpdate() throws Exception {
-		ArticleVO articleVO = new ArticleVO("수정된 글 제목입니다...", "수정된 글 내용입니다...", "userMOD");
-		articleVO.setArticleNo(1);
-		articleDAO.updateArticle(articleVO);
-	}
-	
-	@Test
-	public void testDelete() throws Exception {
-		int articleNo = 3;
-		articleDAO.deleteArticle(articleNo);
-	}
-	
-	@Test
-	public void testList() throws Exception {
+	public void testListArticle() throws Exception {
 		Criteria criteria = new Criteria();
 		criteria.setPage(3);
 		criteria.setPerPageNum(20);
@@ -69,6 +49,28 @@ public class ArticleDAOTest {
 			logger.info(articleVO.getArticleNo() + " : " + articleVO.getTitle());
 		}
 	}
+	
+	@Test
+	public void testReadArticle() throws Exception {
+		int articleNo = 1;
+		articleDAO.readArticle(articleNo);
+	}
+	
+	@Test
+	public void testUpdateArticle() throws Exception {
+		ArticleVO articleVO = new ArticleVO();
+		articleVO.setArticleNo(1);
+		articleVO.setTitle("수정된 글 제목입니다...");
+		articleVO.setContent("수정된 글 내용입니다...");
+		articleDAO.updateArticle(articleVO);
+	}
+	
+	@Test
+	public void testDeleteArticle() throws Exception {
+		int articleNo = 3;
+		articleDAO.deleteArticle(articleNo);
+	}
+
 	
 	@Test
 	public void testURI() throws Exception {

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.mccc.mapper.ReplyMapper">
+
+	<insert id="createReply">
+		INSERT INTO tbl_reply(atc_no, rpl_writer, rpl_text)
+		VALUES (#{articleNo}, #{replyWriter}, #{replyText})
+	</insert>
+	
+	<select id="listReply" resultMap="ReplyResultMap">
+		SELECT rpl_no, atc_no, rpl_writer, rpl_text, rpl_regdate
+		FROM tbl_reply
+		WHERE atc_no = #{articleNo}
+		ORDER BY rpl_no
+	</select>
+	
+	<update id="updateReply">
+		UPDATE tbl_reply
+		SET rpl_text = #{replyText}
+		WHERE rpl_no = #{replyNo}
+	</update>
+	
+	<delete id="deleteReply">
+		DELETE
+		FROM tbl_reply
+		WHERE rpl_no = #{replyNo}
+	</delete>
+
+	<resultMap id="ReplyResultMap" type="ReplyVO">
+		<id property="replyNo" column="rpl_no"></id>
+		<result property="articleNo" column="atc_no"></result>
+		<result property="replyWriter" column="rpl_writer"></result>
+		<result property="replyText" column="rpl_text"></result>
+		<result property="replyRegdate" column="rpl_regdate"></result>
+	</resultMap>
+	
+</mapper>

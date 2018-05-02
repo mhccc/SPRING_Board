@@ -11,17 +11,6 @@ public class ArticleVO {
 	private Date articleRegDate;
 	private int hit;
 	private int commentCnt;
-	
-	public ArticleVO() {
-		super();
-	}
-
-	public ArticleVO(String title, String content, String writer) {
-		super();
-		this.title = title;
-		this.content = content;
-		this.writer = writer;
-	}
 
 	public int getArticleNo() {
 		return articleNo;
