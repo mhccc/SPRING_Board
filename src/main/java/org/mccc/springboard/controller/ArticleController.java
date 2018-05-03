@@ -28,6 +28,7 @@ public class ArticleController {
 	//리스트 GET
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(@ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
+		
 		logger.info("Article list get ...... ");
 		logger.info(criteria.toString());
 		
@@ -35,7 +36,7 @@ public class ArticleController {
 		pageMaker.setCriteria(criteria);
 		pageMaker.setTotalCount(articleService.countArticles(criteria));
 		
-		model.addAttribute("list", articleService.listCriteria(criteria));	
+		model.addAttribute("list", articleService.listArticle(criteria));	
 		model.addAttribute("pageMaker", pageMaker);
 		
 		return "/article/list";
@@ -44,6 +45,7 @@ public class ArticleController {
 	//쓰기 GET
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String writeGET() throws Exception {
+		
 		logger.info("Article write get ...... ");
 		
 		return "/article/write";
@@ -51,6 +53,7 @@ public class ArticleController {
 	//쓰기 POST
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String writePOST(ArticleVO articleVO, RedirectAttributes rttr) throws Exception {
+		
 		logger.info("Article write post ...... ");
 		logger.info("ArticleVO : " + articleVO.toString());
 		
@@ -64,6 +67,7 @@ public class ArticleController {
 	//읽기 GET
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("articleNo") int articleNo, @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
+		
 		logger.info("Article read get ...... ");
 		
 		model.addAttribute("article", articleService.readArticle(articleNo));
@@ -74,6 +78,7 @@ public class ArticleController {
 	//수정 GET
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String modifyGET(@RequestParam("articleNo") int articleNo, @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
+		
 		logger.info("Article modify get ...... ");
 		
 		model.addAttribute("article", articleService.readArticle(articleNo));
@@ -83,6 +88,7 @@ public class ArticleController {
 	//수정 POST
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String modifyPOST(ArticleVO articleVO, Criteria criteria, RedirectAttributes rttr) throws Exception {
+		
 		logger.info("Article modify post ...... ");
 		
 		articleService.updateArticle(articleVO);
@@ -100,6 +106,7 @@ public class ArticleController {
 	//삭제 POST
 	@RequestMapping(value = "/remove", method = RequestMethod.POST)
 	public String remove(@RequestParam("articleNo") int articleNo, Criteria criteria, RedirectAttributes rttr) throws Exception {
+		
 		logger.info("Article remove post ...... ");
 		
 		articleService.deleteArticle(articleNo);

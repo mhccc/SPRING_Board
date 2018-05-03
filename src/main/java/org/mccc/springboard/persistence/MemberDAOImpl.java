@@ -15,21 +15,25 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public void createMember(MemberVO memberVO) throws Exception {
+		
 		sqlSession.insert(NAMESAPCE + ".createMember", memberVO);
 	}
 
 	@Override
 	public MemberVO readMember(String userid) throws Exception {
+		
 		return sqlSession.selectOne(NAMESAPCE + ".readMember", userid);
 	}
 
 	@Override
 	public void updateMember(MemberVO memberVO) throws Exception {
+		
 		sqlSession.update(NAMESAPCE + ".updateMember", memberVO);
 	}
 
 	@Override
 	public void deleteMember(String userid) throws Exception {
+		
 		sqlSession.delete(NAMESAPCE + ".deleteMember", userid);
 	}
 

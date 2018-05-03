@@ -10,13 +10,6 @@
 		VALUES (#{articleNo}, #{replyWriter}, #{replyText})
 	</insert>
 	
-	<select id="listReply" resultMap="ReplyResultMap">
-		SELECT rpl_no, atc_no, rpl_writer, rpl_text, rpl_regdate
-		FROM tbl_reply
-		WHERE atc_no = #{articleNo}
-		ORDER BY rpl_no
-	</select>
-	
 	<update id="updateReply">
 		UPDATE tbl_reply
 		SET rpl_text = #{replyText}
@@ -28,6 +21,20 @@
 		FROM tbl_reply
 		WHERE rpl_no = #{replyNo}
 	</delete>
+	
+	<select id="listReply" resultMap="ReplyResultMap">
+		SELECT rpl_no, atc_no, rpl_writer, rpl_text, rpl_regdate
+		FROM tbl_reply
+		WHERE atc_no = #{articleNo}
+		ORDER BY rpl_no
+		LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+	</select>
+	
+	<select id="countReply">
+		SELECT COUNT(atc_no)
+		FROM tbl_reply
+		WHERE atc_no = #{articleNo}
+	</select>
 
 	<resultMap id="ReplyResultMap" type="ReplyVO">
 		<id property="replyNo" column="rpl_no"></id>

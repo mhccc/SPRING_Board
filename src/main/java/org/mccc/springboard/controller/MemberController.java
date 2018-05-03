@@ -23,12 +23,15 @@ public class MemberController {
 	//회원가입 GET
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String joinGET() throws Exception {
+		
 		logger.info("Member join get ...... ");
+		
 		return "/member/join";
 	}
 	//회원가입 POST
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String joinPOST(MemberVO memberVO, RedirectAttributes rttr) throws Exception {
+		
 		logger.info("Member join post ...... ");
 		logger.info("MemberVO : " + memberVO.toString());
 
@@ -44,12 +47,14 @@ public class MemberController {
 	//로그인 GET
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginGET() throws Exception {
+		
 		logger.info("Member login get ...... ");
 		return "/member/login";
 	}
 	//로그인 POST
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginPOST(MemberVO memberVO) throws Exception {
+		
 		logger.info("Member login post ...... ");
 		logger.info("MemberVO : " + memberVO.toString());
 		

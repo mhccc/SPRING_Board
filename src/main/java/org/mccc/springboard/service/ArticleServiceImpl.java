@@ -36,8 +36,8 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<ArticleVO> listCriteria(Criteria criteria) throws Exception {
-		return articleDAO.listCriteria(criteria);
+	public List<ArticleVO> listArticle(Criteria criteria) throws Exception {
+		return articleDAO.listArticleCriteria(criteria);
 	}
 
 	@Override

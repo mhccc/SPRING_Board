@@ -43,7 +43,7 @@ public class ArticleDAOTest {
 		criteria.setPage(3);
 		criteria.setPerPageNum(20);
 		
-		List<ArticleVO> list = articleDAO.listCriteria(criteria);
+		List<ArticleVO> list = articleDAO.listArticleCriteria(criteria);
 		
 		for (ArticleVO articleVO : list) {
 			logger.info(articleVO.getArticleNo() + " : " + articleVO.getTitle());
@@ -102,7 +102,7 @@ public class ArticleDAOTest {
 		
 		logger.info("====================================================");
 		
-		List<ArticleVO> list = articleDAO.listCriteria(criteria);
+		List<ArticleVO> list = articleDAO.listArticleCriteria(criteria);
 		
 		for (ArticleVO articleVO : list) {
 			logger.info(articleVO.getArticleNo() + ": " + articleVO.getTitle());

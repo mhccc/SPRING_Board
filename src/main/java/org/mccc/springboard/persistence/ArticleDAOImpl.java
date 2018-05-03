@@ -18,31 +18,37 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 	@Override
 	public void createArticle(ArticleVO articleVO) throws Exception {
+		
 		sqlSession.insert(NAMESPACE + ".createArticle", articleVO);
 	}
 
 	@Override
 	public ArticleVO readArticle(int articleNo) throws Exception {
+		
 		return sqlSession.selectOne(NAMESPACE + ".readArticle", articleNo);
 	}
 
 	@Override
 	public void updateArticle(ArticleVO articleVO) throws Exception {
+		
 		sqlSession.update(NAMESPACE + ".updateArticle", articleVO);
 	}
 
 	@Override
 	public void deleteArticle(int articleNo) throws Exception {
+		
 		sqlSession.delete(NAMESPACE + ".deleteArticle", articleNo);
 	}
 
 	@Override
-	public List<ArticleVO> listCriteria(Criteria criteria) throws Exception {
+	public List<ArticleVO> listArticleCriteria(Criteria criteria) throws Exception {
+		
 		return sqlSession.selectList(NAMESPACE + ".listCriteria", criteria);
 	}
 
 	@Override
 	public int countArticles(Criteria criteria) throws Exception {
+		
 		return sqlSession.selectOne(NAMESPACE + ".countArticles", criteria);
 	}
 

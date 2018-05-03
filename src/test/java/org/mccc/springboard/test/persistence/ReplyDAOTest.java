@@ -1,9 +1,12 @@
 package org.mccc.springboard.test.persistence;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mccc.springboard.domain.Criteria;
 import org.mccc.springboard.domain.ReplyVO;
 import org.mccc.springboard.persistence.ReplyDAO;
 import org.slf4j.Logger;
@@ -22,6 +25,7 @@ public class ReplyDAOTest {
 	
 	@Test
 	public void testReplyCreate() throws Exception {
+		
 		for (int i = 0; i < 100; i++) {
 			ReplyVO replyVO = new ReplyVO();
 			replyVO.setArticleNo(100);
@@ -33,13 +37,8 @@ public class ReplyDAOTest {
 	}
 	
 	@Test
-	public void testListReply() throws Exception {
-		int articleNo = 100;
-		logger.info(replyDAO.listReply(articleNo).toString());
-	}
-	
-	@Test
 	public void testUpdateReply() throws Exception {
+		
 		ReplyVO replyVO = new ReplyVO();
 		replyVO.setReplyNo(2);
 		replyVO.setReplyText(2 + "번재 댓글 수정.");
@@ -49,8 +48,24 @@ public class ReplyDAOTest {
 	
 	@Test
 	public void testDeleteReply() throws Exception {
+		
 		int replyNo = 3;
 		replyDAO.deleteReply(replyNo);
+	}
+	
+	@Test
+	public void testListCriteria() throws Exception {
+
+	    Criteria criteria = new Criteria();
+	    criteria.setPerPageNum(20);
+	    criteria.setPage(1);
+
+	    List<ReplyVO> replies = replyDAO.listReplyCriteria(100, criteria);
+
+	    for (ReplyVO reply : replies) {
+	        logger.info(reply.getReplyNo() + " : " + reply.getReplyText());
+	    }
+
 	}
 	
 }
