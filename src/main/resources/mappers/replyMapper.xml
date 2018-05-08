@@ -30,7 +30,7 @@
 		LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
 	</select>
 	
-	<select id="countReply">
+	<select id="countReply" resultType="int">
 		SELECT COUNT(atc_no)
 		FROM tbl_reply
 		WHERE atc_no = #{articleNo}

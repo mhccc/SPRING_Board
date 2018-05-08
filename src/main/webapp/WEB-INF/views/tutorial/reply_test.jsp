@@ -46,18 +46,15 @@
 						        <label for="newReplyWriter">댓글 작성자</label>
 						        <input class="form-control" id="newReplyWriter" name="replyWriter" placeholder="댓글 작성자를 입력해주세요">
 						    </div>
+						    <div>
+						    	<button type="submit" id="replyAddBtn" class="btn btn-primary"><i class="fa fa-check-square-o" style="margin-right: 5px;"></i>등록</button>
+						    </div>
 						</div>
 						<div class="box-footer">
 						    <ul id="replies">
 						
 						    </ul>
-						</div>
-						<div class="box-footer">
-						    <div class="text-center">
-						        <ul class="pagination pagination-sm no-margin">
-						
-						        </ul>
-						    </div>
+						    
 						</div>
 					</div>
 				</div>
@@ -108,7 +105,125 @@
 <%@ include file="../include/plugin_js.jsp" %>
 <script>
 	
-  
+	getReplies();
+	
+	function getReplies() {
+	
+		$.getJSON("/reply/100/1", function (data) {
+			
+			var str = "";
+			
+			$(data.replies).each(function () {
+				str += "<li data-replyNo='" + this.replyNo + "' class='replyLi'>"
+					+	"<p class='replyText'>" + this.replyText + "</p>"
+					+	"<p class='replyWriter'>" + this.replyWriter + "</p>"
+					+	"<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
+					+  "</li>"
+					+  "<hr/>"
+			});
+			
+			$("#replies").html(str);
+		});
+		
+	}
+	
+	var articleNo = 100;
+	
+	$("#replyAddBtn").on("click", function () {
+		
+	    var replyText = $("#newReplyText");
+	    var replyWriter = $("#newReplyWriter");
+
+	    var replyTextVal = replyText.val();
+	    var replyWriterVal = replyWriter.val();
+
+	    $.ajax({
+	        type : "post",
+	        url : "/reply",
+	        headers : {
+	            "Content-type" : "application/json",
+	            "X-HTTP-Method-Override" : "POST"
+	        },
+	        dataType : "text",
+	        data : JSON.stringify({
+	            articleNo : articleNo,
+	            replyText : replyTextVal,
+	            replyWriter : replyWriterVal
+	        }),
+	        success : function (result) {
+	            if (result == "writeSuccess") {
+	                alert("댓글 등록 완료!");
+	            }
+	            getReplies();
+	            replyText.val("");
+	            replyWriter.val("");
+	        }
+	    });
+	});
+	
+	$("#replies").on("click", ".replyLi button", function() {
+		
+		var reply = $(this).parent();
+		
+		var replyNo = reply.attr("data-replyNo");
+		var replyText = reply.find(".replyText").text();
+		var replyWriter = reply.find(".replyWriter").text();
+		
+		$("#replyNo").val(replyNo);
+	    $("#replyText").val(replyText);
+	    $("#replyWriter").val(replyWriter);
+		
+	});
+	
+	$(".modalDelBtn").on("click", function () {
+	
+		var replyNo = $(this).parent().parent().find("#replyNo").val();
+			
+	    $.ajax({
+	        type : "delete",
+	        url : "/reply/" + replyNo,
+	        headers : {
+	            "Content-type" : "application/json",
+	            "X-HTTP-Method-Override" : "DELETE"
+	        },
+	        dataType : "text",
+	        success : function (result) {
+	            if (result == "removeSuccess") {
+	                alert("댓글 삭제 완료!");
+	            }
+	            $("#modifyModal").modal("hide");
+	            getReplies();
+	        }
+	    });
+	});
+	
+	$(".modalModBtn").on("click", function () {
+			
+		var replyNo = $(this).parent().parent().find("#replyNo").val();
+		var replyText = $(this).parent().parent().find("#replyText").val();
+			
+	    $.ajax({
+	        type : "put",
+	        url : "/reply",
+	        headers : {
+	            "Content-type" : "application/json",
+	            "X-HTTP-Method-Override" : "PUT"
+	        },
+	        dataType : "text",
+	        data : JSON.stringify({
+	        	replyNo : replyNo,
+	        	replyText : replyText
+	        }),
+	        success : function (result) {
+	            if (result == "modifySuccess") {
+	                alert("댓글 수정 완료!");
+	            }
+	            $("#modifyModal").modal("hide");
+	            getReplies();
+	        }
+	    });
+	});
+	
 </script>
 
 </body>

@@ -57,7 +57,7 @@ public class ReplyDAOTest {
 	public void testListCriteria() throws Exception {
 
 	    Criteria criteria = new Criteria();
-	    criteria.setPerPageNum(20);
+	    criteria.setPerPageNum(10);
 	    criteria.setPage(1);
 
 	    List<ReplyVO> replies = replyDAO.listReplyCriteria(100, criteria);
