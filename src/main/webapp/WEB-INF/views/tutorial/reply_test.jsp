@@ -52,9 +52,12 @@
 						</div>
 						<div class="box-footer">
 						    <ul id="replies">
-						
+						    	<!-- 댓글 위치 -->
 						    </ul>
-						    
+						    <div class="text-center">
+								<button type="button" id="readMoreBtn" class="btn btn-link" style="text-decoration: none">더보기</button>
+								<div class="loader" id="loader"></div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -104,30 +107,61 @@
 
 <%@ include file="../include/plugin_js.jsp" %>
 <script>
+	var articleNo = 100;
+	var pageNo = 1;
+	getReplies(articleNo, pageNo);
 	
-	getReplies();
-	
-	function getReplies() {
-	
-		$.getJSON("/reply/100/1", function (data) {
-			
-			var str = "";
-			
-			$(data.replies).each(function () {
-				str += "<li data-replyNo='" + this.replyNo + "' class='replyLi'>"
-					+	"<p class='replyText'>" + this.replyText + "</p>"
-					+	"<p class='replyWriter'>" + this.replyWriter + "</p>"
-					+	"<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
-					+  "</li>"
-					+  "<hr/>"
-			});
-			
-			$("#replies").html(str);
-		});
-		
+	function sleep(milliseconds) {
+		var start = new Date().getTime();
+		for (var i = 0; i < 1e7; i++) {
+			if ((new Date().getTime() - start) > milliseconds){
+	      		break;
+	    	}
+	  	}
 	}
 	
-	var articleNo = 100;
+	function getReplies(articleNo, pageNo) {
+		
+		$.ajax({
+	        type : "get",
+	        url : "/reply/" + articleNo + "/" + pageNo,
+	        headers : {
+	            "Content-type" : "application/json",
+	            "X-HTTP-Method-Override" : "GET"
+	        },
+	        dataType : "json",
+	        beforeSend : function() {
+	        	$('#readMoreBtn').hide();
+	        	$('#loader').show();
+	        },
+	        complete : function() {
+	        	sleep(1000);
+	        	$('#readMoreBtn').show();
+	        	$('#loader').hide();
+	        },
+	        success : function (result) {
+	        	
+	        	var str = "";
+	        	
+	        	$(result.replies).each(function (index) {
+					str += "<li data-replyNo='" + this.replyNo + "' class='replyLi'>"
+						+	"<p class='replyText'>" + this.replyText + "</p>"
+						+	"<p class='replyWriter'>" + this.replyWriter + "</p>"
+						+	"<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
+						+  "</li>"
+						+  "<hr/>";
+				});
+	        	
+	        	$("#replies").append(str);
+	        }
+	    });
+	}
+	
+	$("#readMoreBtn").on("click", function () {
+		
+		pageNo++;
+		getReplies(articleNo, pageNo);
+	});
 	
 	$("#replyAddBtn").on("click", function () {
 		
