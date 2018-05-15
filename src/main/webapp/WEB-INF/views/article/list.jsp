@@ -100,7 +100,7 @@
 								        </div>
 								    </div>
 								    <div class="pull-right col-sm-4" style="margin: 15px 0px 15px 0px;">
-								        <button id="writeBtn" class="btn btn-primary pull-right"><i class="fa fa-edit" style="margin-right: 5px;"></i>글 작성</button>
+								        <button type="button" id="writeBtn" class="btn btn-primary pull-right"><i class="fa fa-edit" style="margin-right: 5px;"></i>글 작성</button>
 								    </div>
 								</form>
 							</div>
@@ -145,14 +145,12 @@
 	    		formObj.submit();
 	    	}
 		});
-    });
-
-	$(function () {
-		$('#writeBtn').on('click', function () {
+	    
+	    $('#writeBtn').on('click', function () {
     		self.location = '/article/write'
     	});
-	})
-  
+    });
+
 </script>
 
 </body>

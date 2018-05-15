@@ -55,9 +55,9 @@
 						    	<!-- 댓글 위치 -->
 						    </ul>
 						    <div class="text-center">
-								<button type="button" id="readMoreBtn" class="btn btn-link" style="text-decoration: none">더보기</button>
-								<div class="loader" id="loader"></div>
-							</div>
+						    	<button type="button" id="readMoreBtn" class="btn btn-link" style="text-decoration: none;">더보기</button>
+								<div class="loader text-center" id="loader"></div>
+						    </div>
 						</div>
 					</div>
 				</div>

@@ -26,7 +26,7 @@
 		SELECT rpl_no, atc_no, rpl_writer, rpl_text, rpl_regdate
 		FROM tbl_reply
 		WHERE atc_no = #{articleNo}
-		ORDER BY rpl_no
+		ORDER BY rpl_no DESC
 		LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
 	</select>
 	
