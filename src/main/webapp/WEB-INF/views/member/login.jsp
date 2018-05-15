@@ -30,7 +30,7 @@
 				  	<input type="password" id="password" name="password" class="form-control" maxlength="15" required>
 				  	<span class="glyphicon glyphicon-lock form-control-feedback" id="passwordFeedback"></span>
 				  	<div>
-				    	<h6 style="color:red;" id="passwordCheckMessage"> <c:if test="${errors.invalidPassword}">잘못된 비밀번호 입니다.</c:if> </h6>
+				    	<h6 style="color:red;" id="passwordCheckMessage"> <c:if test="${errors.invalidPassword}">잘못된 비밀번호입니다.</c:if> </h6>
 				  	</div>
 				</div>
 			  	<div class="form-group" style="margin-top: 20px;">

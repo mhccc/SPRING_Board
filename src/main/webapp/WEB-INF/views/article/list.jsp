@@ -95,12 +95,12 @@
 								        <div class="input-group">
 								            <input type="text" class="form-control" name="keyword" id="keywordInput" value="${criteria.keyword}" placeholder="검색어">
 								            <span class="input-group-btn">
-								                <button type="button" class="btn btn-primary" id="searchBtn"><i class="fa fa-search" style="margin-right: 5px;"></i>검색</button>
+								                <button type="button" class="btn btn-primary" id="searchBtn"><i class="fa fa-search margin-r-5"></i>검색</button>
 								            </span>
 								        </div>
 								    </div>
 								    <div class="pull-right col-sm-4" style="margin: 15px 0px 15px 0px;">
-								        <button type="button" id="writeBtn" class="btn btn-primary pull-right"><i class="fa fa-edit" style="margin-right: 5px;"></i>글 작성</button>
+								        <button type="button" id="writeBtn" class="btn btn-primary pull-right"><i class="fa fa-edit margin-r-5"></i>글 작성</button>
 								    </div>
 								</form>
 							</div>

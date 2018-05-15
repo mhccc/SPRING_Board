@@ -30,7 +30,6 @@ public class ArticleController {
 	public String list(@ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
 		
 		logger.info("Article list get ...... ");
-		logger.info(criteria.toString());
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);
@@ -58,7 +57,7 @@ public class ArticleController {
 		logger.info("ArticleVO : " + articleVO.toString());
 		
 		articleService.createArticle(articleVO);
-		//view 수정할 필요 있음(modal 이용하여 성공 띄우기)
+		
 		rttr.addFlashAttribute("result", "writeSuccess");
 		
 		return "redirect:/article/list";
@@ -92,7 +91,7 @@ public class ArticleController {
 		logger.info("Article modify post ...... ");
 		
 		articleService.updateArticle(articleVO);
-		//view 수정할 필요 있음(modal 이용하여 성공 띄우기)
+		
 		rttr.addAttribute("page", criteria.getPage());
 		rttr.addAttribute("perPageNum", criteria.getPerPageNum());
 		rttr.addAttribute("searchType", criteria.getSearchType());
@@ -110,7 +109,7 @@ public class ArticleController {
 		logger.info("Article remove post ...... ");
 		
 		articleService.deleteArticle(articleNo);
-		//view 수정할 필요 있음(modal 이용하여 성공 띄우기)
+		
 		rttr.addAttribute("page", criteria.getPage());
 		rttr.addAttribute("perPageNum", criteria.getPerPageNum());
 		rttr.addAttribute("searchType", criteria.getSearchType());

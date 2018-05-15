@@ -39,12 +39,12 @@
 					         		<div class="form-group">
 										<input type="text" name="title" class="form-control" placeholder="제목">
 					      			</div>
-					      			<textarea id="editor" name="content" rows="20" cols="80" placeholder="내용을 입력해주세요."></textarea>
+					      			<textarea id="editor" name="content" rows="20" cols="80" placeholder="내용을 입력해 주세요."></textarea>
 					      			<hr>
 					     			<div class="text-center" style="margin-bottom: 10px;">
 					     				<input type="hidden" name="writer" value="TEST">
-					     				<button type="submit" id="registerBtn" class="btn btn-primary"><i class="fa fa-check-square-o" style="margin-right: 5px;"></i>등록</button>
-					  					<button type="button" id="cancelBtn" class="btn btn-warning"><i class="fa fa-undo" style="margin-right: 5px;"></i>취소</button>
+					     				<button type="submit" id="registerBtn" class="btn btn-primary"><i class="fa fa-check-square-o margin-r-5"></i>등록</button>
+					  					<button type="button" id="cancelBtn" class="btn btn-warning"><i class="fa fa-undo margin-r-5"></i>취소</button>
 					     			</div>
 					      		</form>
 					    	</div>

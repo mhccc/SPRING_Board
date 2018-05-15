@@ -47,8 +47,8 @@
 										<input type="hidden" name="searchType" value="${criteria.searchType}">
 										<input type="hidden" name="keyword" value="${criteria.keyword}">
 						                <input type="hidden" name="articleNo" value="${article.articleNo}">
-					     				<button type="submit" id="registerBtn" class="btn btn-primary"><i class="fa fa-check-square-o" style="margin-right: 5px;"></i>저장</button>
-					  					<button type="button" id="cancelBtn" class="btn btn-warning"><i class="fa fa-undo" style="margin-right: 5px;"></i>취소</button>
+					     				<button type="submit" id="registerBtn" class="btn btn-primary"><i class="fa fa-check-square-o margin-r-5"></i>저장</button>
+					  					<button type="button" id="cancelBtn" class="btn btn-warning"><i class="fa fa-undo margin-r-5"></i>취소</button>
 					     			</div>
 					      		</form>
 					    	</div>

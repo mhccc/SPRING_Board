@@ -158,8 +158,6 @@
 	}
 	
 	$("#readMoreBtn").on("click", function () {
-		
-		pageNo++;
 		getReplies(articleNo, pageNo);
 	});
 	
