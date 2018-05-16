@@ -63,7 +63,7 @@
 							    <button id="listBtn" class="btn btn-primary"><i class="fa fa-list margin-r-5"></i>목록</button>
 								<c:if test="${article.writer eq article.writer}">
 									<div class="pull-right">
-										<button id="modifyBtn" class="btn btn-warning"><i class="fa fa-undo margin-r-5"></i>수정</button>
+										<button id="modifyBtn" class="btn btn-warning"><i class="fa fa-edit margin-r-5"></i>수정</button>
 										<button id="deleteBtn" class="btn btn-danger"><i class="fa fa-trash margin-r-5"></i>삭제</button>
 									</div>
 								</c:if>
@@ -94,24 +94,22 @@
 						</div>
 						<!-- /.box -->
 						
-						<div class="box box-info collapsed-box">
+						<div class="box box-info reply-widget">
 							<div class="box-header with-border">
-							    <div style="color: #666"><i class="fa fa-comments-o margin-r-5 replyCount"></i></div>
+							    <div class="replyCount" style="color: #666"></div>
 							    <div class="box-tools">
-							        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-							            <i class="fa fa-plus"></i>
-							        </button>
+							    	<!-- 위젯 보이기/숨김 버튼 위치 -->
 							    </div>
 							</div>
 							<div class="box-body repliesDiv">
 							
 								<!-- 댓글 위치 -->
 							
-								<div class="text-center loaderDiv">
-						    		<button type="button" id="readMoreBtn" class="btn btn-link" style="text-decoration: none;">더보기</button>
-									<div class="loader text-center" id="loader"></div>
-						    	</div>
 							</div>
+							<div class="text-center loaderDiv" style="padding-bottom: 10px;">
+					    		<button type="button" id="readMoreBtn" class="btn btn-link" style="text-decoration: none;">더보기</button>
+								<div class="loader text-center" id="loader"></div>
+					    	</div>
 						</div>
 						<!-- /.box -->
 					</div>
@@ -137,20 +135,19 @@
     {{#each.}}
     <div class="post replyDiv" data-replyNo={{replyNo}}>
         <div class="user-block">
-            <img class="img-circle img-bordered-sm" src="/dist/img/user1-128x128.jpg" alt="user image">
+            <img class="img-circle img-bordered-sm" src="../resources/dist/img/user1-128x128.jpg" alt="user image">
             <span class="username">
                 <a href="#">{{replyWriter}}</a>
                 <a href="#" class="pull-right btn-box-tool replyDelBtn" data-toggle="modal" data-target="#delModal">
-                    <i class="fa fa-times"> 삭제</i>
+                    <i class="fa fa-trash"> 삭제</i>
                 </a>
                 <a href="#" class="pull-right btn-box-tool replyModBtn" data-toggle="modal" data-target="#modModal">
                     <i class="fa fa-edit"> 수정</i>
                 </a>
             </span>
-            <span class="description">{{prettifyDate regDate}}</span>
+            <span class="description">{{prettifyDate replyRegdate}}</span>
         </div>
-        <div class="oldReplyText">{{{escape replyText}}}</div>
-        <br/>
+        <div class="oldReplyText">{{{replyText}}}</div>
     </div>
     {{/each}}
 </script>
@@ -183,8 +180,71 @@
     	});
 		
 		$("#readMoreBtn").on("click", function () {
-			getReplies(articleNo, pageNo);
+			getReplies();
 		});
+		
+		getReplies();
+		
+		//동기 지연을 위한 함수 (settimeout은 비동기로 작동하여 시각적 대기 효과가 없음)
+		function sleep(milliseconds) {
+			var start = new Date().getTime();
+			for (var i = 0; i < 1e7; i++) {
+				if ((new Date().getTime() - start) > milliseconds){
+		      		break;
+		    	}
+		  	}
+		}
+		
+		function getReplies() {
+			pageNo++;
+			
+			$.ajax({
+		        type : "get",
+		        url : "/reply/" + articleNo + "/" + pageNo,
+		        headers : {
+		            "Content-type" : "application/json",
+		            "X-HTTP-Method-Override" : "GET"
+		        },
+		        dataType : "json",
+		        beforeSend : function() {
+		        	$('#readMoreBtn').hide();
+		        	$('#loader').show();
+		        },
+		        complete : function() {
+		        	sleep(1000);
+		        	$('#readMoreBtn').show();
+		        	$('#loader').hide();
+		        },
+		        success : function (result) {
+		        	printReplyCount(result.pageMaker.totalCount);
+		            printReplies(result.replies, $(".repliesDiv"), $("#replyTemplate"));
+		        }
+		    });
+		}
+		
+		function printReplyCount(totalCount) {
+			var replyCountDiv = $(".replyCount");
+			var collapseBox = $(".reply-widget");
+			
+			replyCountDiv.html("<i class='fa fa-comments-o margin-r-5'></i>댓글 " + totalCount + "개");
+			
+			if (totalCount === 0) {
+				collapseBox.find(".btn-box-tool").remove();
+				return;
+			}
+			
+			collapseBox.find(".box-tools").html(
+				"<button type='button' class='btn btn-box-tool' data-widget='collapse'>"
+	            + "<i class='fa fa-minus'></i>"
+	            + "</button>"
+			);
+		}
+		
+		function printReplies(replyArr, targetArea, templateObj) {
+			var replyTemplate = Handlebars.compile(templateObj.html());
+			var html = replyTemplate(replyArr);
+			targetArea.append(html);
+		}
 		
 		Handlebars.registerHelper("escapeExp", function (replyText) {
 			var text = Handlebars.Utils.escapeExpression(replyText);
@@ -209,46 +269,6 @@
 			
 			return year + "-" + month + "-" + date + " " + hours + ":" + minutes;
 		});
-		
-		//동기 지연을 위한 함수 (settimeout은 비동기로 작동하여 시각적 대기 효과가 없음)
-		function sleep(milliseconds) {
-			var start = new Date().getTime();
-			for (var i = 0; i < 1e7; i++) {
-				if ((new Date().getTime() - start) > milliseconds){
-		      		break;
-		    	}
-		  	}
-		}
-		
-		function getReplies(articleNo, pageNo) {
-			pageNo++;
-			
-			$.ajax({
-		        type : "get",
-		        url : "/reply/" + articleNo + "/" + pageNo,
-		        headers : {
-		            "Content-type" : "application/json",
-		            "X-HTTP-Method-Override" : "GET"
-		        },
-		        dataType : "json",
-		        beforeSend : function() {
-		        	$('#readMoreBtn').hide();
-		        	$('#loader').show();
-		        },
-		        complete : function() {
-		        	sleep(1000);
-		        	$('#readMoreBtn').show();
-		        	$('#loader').hide();
-		        },
-		        success : function (result) {
-		        	console.log(result);
-		        	console.log(result.pageMaker.totalCount);
-		        	console.log(result.replies);
-		        	//printReplyCount(result.pageMaker.totalCount);
-		            //printReplies(result.replies, $(".repliesDiv"), $("#replyTemplate"));
-		        }
-		    });
-		}
 	});
 </script>
 
