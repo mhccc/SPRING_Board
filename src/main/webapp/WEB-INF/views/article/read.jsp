@@ -97,7 +97,7 @@
 						<div class="box box-info reply-widget">
 							<div class="box-header with-border">
 							    <div class="replyCount" style="color: #666"></div>
-							    <div class="box-tools">
+							    <div class="box-tools collapseBtnDiv">
 							    	<!-- 위젯 보이기/숨김 버튼 위치 -->
 							    </div>
 							</div>
@@ -108,7 +108,7 @@
 							</div>
 							<div class="text-center loaderDiv" style="padding-bottom: 10px;">
 					    		<button type="button" id="readMoreBtn" class="btn btn-link" style="text-decoration: none;">더보기</button>
-								<div class="loader text-center" id="loader"></div>
+								<div id="loader" class="loader text-center"></div>
 					    	</div>
 						</div>
 						<!-- /.box -->
@@ -183,6 +183,15 @@
 			getReplies();
 		});
 		
+		//아직 존재하지 않지만 js코드에 의해 생길 html 태그에 이벤트 바인딩
+		$(".collapseBtnDiv").on("click", "button", function() {
+			if ($(".collapseBtnDiv").find("i").hasClass("fa-minus")) {
+				$(".loaderDiv").hide();
+			} else {
+				$(".loaderDiv").show();
+			}
+		});
+		
 		getReplies();
 		
 		//동기 지연을 위한 함수 (settimeout은 비동기로 작동하여 시각적 대기 효과가 없음)
@@ -230,14 +239,15 @@
 			
 			if (totalCount === 0) {
 				collapseBox.find(".btn-box-tool").remove();
-				return;
+				$(".repliesDiv").remove();
+				$(".loaderDiv").remove();
+			} else {
+				collapseBox.find(".box-tools").html(
+					"<button type='button' class='btn btn-box-tool' data-widget='collapse'>"
+		        	+ "<i class='fa fa-minus'></i>"
+		        	+ "</button>"
+				);
 			}
-			
-			collapseBox.find(".box-tools").html(
-				"<button type='button' class='btn btn-box-tool' data-widget='collapse'>"
-	            + "<i class='fa fa-minus'></i>"
-	            + "</button>"
-			);
 		}
 		
 		function printReplies(replyArr, targetArea, templateObj) {
