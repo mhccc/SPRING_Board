@@ -31,9 +31,9 @@
 			
 			<!-- Main content -->
 			<section class="content container-fluid">
-			
 				<div class="row">
 					<div class="col-md-12">
+					
 						<div class="box box-info">
 							<div class="box-header with-border">
 								<h3 class="box-title">${article.title}</h3>
@@ -86,7 +86,7 @@
 						                </div>
 						                <hr/>
 						                <div class="col-sm-2">
-						                    <button type="button" id="replyAddBtn" class="btn btn-primary btn-block"><i class="fa fa-check-square-o margin-r-5"></i>등록</button>
+						                    <button type="button" id="writeReplyBtn" class="btn btn-primary btn-block"><i class="fa fa-check-square-o margin-r-5"></i>등록</button>
 						                </div>
 						            </div>
 						        </form>
@@ -102,21 +102,40 @@
 							    </div>
 							</div>
 							<div class="box-body repliesDiv">
-							
 								<!-- 댓글 위치 -->
-							
 							</div>
-							<div class="text-center loaderDiv" style="padding-bottom: 10px;">
+							<div class="text-center readMoreDiv" style="padding-bottom: 10px;">
 					    		<button type="button" id="readMoreBtn" class="btn btn-link" style="text-decoration: none;">더보기</button>
-								<div id="loader" class="loader text-center"></div>
+								<div id="getRepliesLoader" class="loader text-center"></div>
 					    	</div>
 						</div>
 						<!-- /.box -->
+						
+						<!-- 댓글 수정 modal -->
+						<div class="modal fade" id="modModal">
+						    <div class="modal-dialog">
+						        <div class="modal-content">
+						            <div class="modal-header">
+						                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						                    <span aria-hidden="true">&times;</span></button>
+						                <h4 class="modal-title">댓글 수정</h4>
+						            </div>
+						            <div class="modal-body" data-rno>
+						                <input type="hidden" class="modReplyNo"/>
+						                <textarea class="form-control" id="modReplyText" rows="3" style="resize: none"></textarea>
+						            </div>
+						            <div id="replyLoader" class="loader text-center"></div>
+						            <div class="modal-footer">
+						                <button type="button" class="btn btn-primary" id="modalModBtn"><i class="fa fa-edit margin-r-5"></i>수정</button>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+						
 					</div>
 					<!-- /.col-->
 				</div>
 				<!-- ./row -->
-				
 			</section>
 			<!-- /.content -->
 			
@@ -138,16 +157,12 @@
             <img class="img-circle img-bordered-sm" src="../resources/dist/img/user1-128x128.jpg" alt="user image">
             <span class="username">
                 <a href="#">{{replyWriter}}</a>
-                <a href="#" class="pull-right btn-box-tool replyDelBtn" data-toggle="modal" data-target="#delModal">
-                    <i class="fa fa-trash"> 삭제</i>
-                </a>
-                <a href="#" class="pull-right btn-box-tool replyModBtn" data-toggle="modal" data-target="#modModal">
-                    <i class="fa fa-edit"> 수정</i>
-                </a>
+                <a href="#" class="pull-right btn-box-tool" id="deleteReplyBtn"><i class="fa fa-trash"> 삭제</i></a>
+                <a href="#" class="pull-right btn-box-tool" id="modifyReplyBtn" data-toggle="modal" data-target="#modModal"><i class="fa fa-edit"> 수정</i></a>
             </span>
             <span class="description">{{prettifyDate replyRegdate}}</span>
         </div>
-        <div class="oldReplyText">{{{replyText}}}</div>
+        <div class="oldReplyText">{{{escapeExp replyText}}}</div>
     </div>
     {{/each}}
 </script>
@@ -161,6 +176,8 @@
 		var formObj = $("form[role='form']");
 		var articleNo = "${article.articleNo}";
 		var pageNo = 0;
+		
+		getReplies();
 		
 		$('#listBtn').on('click', function () {
 			formObj.attr('action', '/article/list');
@@ -179,20 +196,77 @@
 			formObj.submit();
     	});
 		
+		$("#writeReplyBtn").on("click", function () {
+			writeReply();
+		});
+		
 		$("#readMoreBtn").on("click", function () {
 			getReplies();
 		});
 		
-		//아직 존재하지 않지만 js코드에 의해 생길 html 태그에 이벤트 바인딩
-		$(".collapseBtnDiv").on("click", "button", function() {
-			if ($(".collapseBtnDiv").find("i").hasClass("fa-minus")) {
-				$(".loaderDiv").hide();
-			} else {
-				$(".loaderDiv").show();
-			}
+		$(".repliesDiv").on("click", ".replyDiv #modifyReplyBtn", function () {
+			var reply = $(this).parents(".replyDiv");
+		    $(".modReplyNo").val(reply.attr("data-replyNo"));
+		    $("#modReplyText").val(reply.find(".oldReplyText").text());
 		});
 		
-		getReplies();
+		$("#modalModBtn").on("click", function () {
+		    var replyNo = $(".curReplyNo").val();
+		    var replyText = $("#modReplyText").val();
+		    
+		    $.ajax({
+		        type : "put",
+		        url : "/reply/" + replyNo,
+		        headers : {
+		            "Content-Type" : "application/json",
+		            "X-HTTP-Method-Override" : "PUT"
+		        },
+		        dataType : "text",
+		        data: JSON.stringify({
+		            replyText : replyText
+		        }),
+		        success: function (result) {
+		            if (result === "modifySuccess") {
+		                $("#modModal").modal("hide");
+		                $('.replyDiv').remove();
+			            pageNo = 0;
+			            getReplies();
+		            }
+		        }
+		    })
+		});
+
+		//상위 클래스명을 이용하여 이벤트 바인딩
+		$(".repliesDiv").on("click", ".replyDiv #deleteReplyBtn", function () {
+			var reply = $(this).parents(".replyDiv");
+			var replyNo = reply.attr("data-replyNo");
+		    
+		    $.ajax({
+		        type: "delete",
+		        url: "/reply/" + replyNo,
+		        headers: {
+		            "Content-Type" : "application/json",
+		            "X-HTTP-Method-Override" : "DELETE"
+		        },
+		        dataType: "text",
+		        success: function (result) {
+		            if (result === "removeSuccess") {
+		                $('.replyDiv').remove();
+			            pageNo = 0;
+			            getReplies();
+		            }
+		        }
+		    });
+		});
+		
+		//상위 클래스명을 이용하여 이벤트 바인딩
+		$(".collapseBtnDiv").on("click", "button", function() {
+			if ($(".collapseBtnDiv").find("i").hasClass("fa-minus")) {
+				$(".readMoreDiv").hide();
+			} else {
+				$(".readMoreDiv").show();
+			}
+		});
 		
 		//동기 지연을 위한 함수 (settimeout은 비동기로 작동하여 시각적 대기 효과가 없음)
 		function sleep(milliseconds) {
@@ -202,6 +276,36 @@
 		      		break;
 		    	}
 		  	}
+		}
+		
+		function writeReply() {
+			var replyText = $("#newReplyText").val();
+		    var replyWriter = $("#newReplyWriter").val();
+
+		    $.ajax({
+		        type : "post",
+		        url : "/reply",
+		        headers : {
+		            "Content-type" : "application/json",
+		            "X-HTTP-Method-Override" : "POST"
+		        },
+		        dataType : "text",
+		        data : JSON.stringify({
+		            articleNo : articleNo,
+		            replyText : replyText,
+		            replyWriter : replyWriter
+		        }),
+		        success : function (result) {
+		        	if (result === "writeSuccess") {
+		        		$('#newReplyText').val("");
+			            $('#newReplyWriter').val("");
+			            $('.replyDiv').remove();
+			            pageNo = 0;
+			            getReplies();
+			            
+		        	}
+		        }
+		    });
 		}
 		
 		function getReplies() {
@@ -217,16 +321,17 @@
 		        dataType : "json",
 		        beforeSend : function() {
 		        	$('#readMoreBtn').hide();
-		        	$('#loader').show();
+		        	$('#getRepliesLoader').show();
 		        },
 		        complete : function() {
-		        	sleep(1000);
+		        	sleep(1100);
 		        	$('#readMoreBtn').show();
-		        	$('#loader').hide();
+		        	$('#getRepliesLoader').hide();
 		        },
 		        success : function (result) {
 		        	printReplyCount(result.pageMaker.totalCount);
 		            printReplies(result.replies, $(".repliesDiv"), $("#replyTemplate"));
+		            printReadMore(result.pageMaker);
 		        }
 		    });
 		}
@@ -239,14 +344,16 @@
 			
 			if (totalCount === 0) {
 				collapseBox.find(".btn-box-tool").remove();
-				$(".repliesDiv").remove();
-				$(".loaderDiv").remove();
+				$(".repliesDiv").hide();
+				$(".readMoreDiv").hide();
 			} else {
 				collapseBox.find(".box-tools").html(
 					"<button type='button' class='btn btn-box-tool' data-widget='collapse'>"
 		        	+ "<i class='fa fa-minus'></i>"
 		        	+ "</button>"
 				);
+				$(".repliesDiv").show();
+				$(".readMoreDiv").show();
 			}
 		}
 		
@@ -254,6 +361,12 @@
 			var replyTemplate = Handlebars.compile(templateObj.html());
 			var html = replyTemplate(replyArr);
 			targetArea.append(html);
+		}
+		
+		function printReadMore(pageMaker) {
+			if (pageMaker.totalCount <= (pageNo * pageMaker.criteria.perPageNum) ) {
+				$(".readMoreDiv").hide();
+			}
 		}
 		
 		Handlebars.registerHelper("escapeExp", function (replyText) {

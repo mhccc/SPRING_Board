@@ -1,4 +1,13 @@
-.loader{
+#replyLoader{
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  position: relative;
+  margin: 20px auto;
+  display: none;
+}
+
+#getRepliesLoader{
   width: 30px;
   height: 30px;
   border-radius: 100%;
@@ -7,7 +16,7 @@
   display: none;
 }
 
-#loader:before, #loader:after{
+.loader:before, .loader:after{
   content: "";
   position: absolute;
   top: 0px;
@@ -19,12 +28,12 @@
   border-top-color: #3498db;
 }
 
-#loader:before{
+.loader:before{
   z-index: 100;
   animation: spin 1s infinite;
 }
 
-#loader:after{
+.loader:after{
   border: 4px solid #ccc;
 }
 

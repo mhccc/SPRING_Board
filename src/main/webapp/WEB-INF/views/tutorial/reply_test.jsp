@@ -162,7 +162,6 @@
 	});
 	
 	$("#replyAddBtn").on("click", function () {
-		
 	    var replyText = $("#newReplyText");
 	    var replyWriter = $("#newReplyWriter");
 
@@ -183,9 +182,6 @@
 	            replyWriter : replyWriterVal
 	        }),
 	        success : function (result) {
-	            if (result == "writeSuccess") {
-	                alert("댓글 등록 완료!");
-	            }
 	            getReplies();
 	            replyText.val("");
 	            replyWriter.val("");
