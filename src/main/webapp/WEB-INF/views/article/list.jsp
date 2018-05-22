@@ -52,7 +52,7 @@
 									<c:forEach var="article" items="${list}">
 										<tr>
 											<td>${article.articleNo}</td>
-											<td><a href='/article/read${pageMaker.makeQuery(pageMaker.criteria.page)}&articleNo=${article.articleNo}' style="margin-right: 3px">${article.title}</a> [${article.commentCnt}]</td>
+											<td><a href='/article/read${pageMaker.makeQuery(pageMaker.criteria.page)}&articleNo=${article.articleNo}' style="margin-right: 3px">${article.title}</a> <span class="badge bg-blue"><i class="fa fa-comment-o margin-r-5"></i>${article.replyCnt}</span>
 											<td>${article.writer}</td>
 											<td><fmt:formatDate value="${article.articleRegDate}" pattern="yyyy-MM-dd HH:mm"/></td>
 											<td><span class="badge bg-red">${article.hit}</span></td>

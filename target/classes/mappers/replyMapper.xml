@@ -35,6 +35,12 @@
 		FROM tbl_reply
 		WHERE atc_no = #{articleNo}
 	</select>
+	
+	<select id="getArticleNo" resultType="int">
+		SELECT atc_no
+		FROM tbl_reply
+		WHERE rpl_no = #{replyNo}
+	</select>
 
 	<resultMap id="ReplyResultMap" type="ReplyVO">
 		<id property="replyNo" column="rpl_no"></id>

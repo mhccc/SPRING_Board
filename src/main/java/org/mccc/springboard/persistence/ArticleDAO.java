@@ -19,4 +19,8 @@ public interface ArticleDAO {
 	
 	public int countArticles(Criteria criteria) throws Exception;
 	
+	public void updateReplyCnt(int articleNo, int amount) throws Exception;
+	
+	public void updateHit(int articleNo) throws Exception;
+	
 }

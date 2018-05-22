@@ -8,6 +8,8 @@ import org.mccc.springboard.domain.ArticleVO;
 import org.mccc.springboard.domain.Criteria;
 import org.mccc.springboard.persistence.ArticleDAO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -20,8 +22,10 @@ public class ArticleServiceImpl implements ArticleService {
 		articleDAO.createArticle(articleVO);
 	}
 
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public ArticleVO readArticle(int articleNo) throws Exception {
+		articleDAO.updateHit(articleNo);
 		return articleDAO.readArticle(articleNo);
 	}
 

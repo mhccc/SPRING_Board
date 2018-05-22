@@ -11,7 +11,7 @@
 	</insert>
 	
 	<select id="readArticle" resultMap="ArticleResultMap">
-		SELECT atc_no, atc_title, atc_content, atc_writer, atc_regdate, atc_hit, atc_commentcnt
+		SELECT atc_no, atc_title, atc_content, atc_writer, atc_regdate, atc_hit, atc_replycnt
 		FROM tbl_article
 		WHERE atc_no = #{articleNo}
 	</select>
@@ -30,7 +30,7 @@
 	
 	<select id="listCriteria" resultMap="ArticleResultMap">
 		<![CDATA[
-			SELECT atc_no, atc_title, atc_content, atc_writer, atc_regdate, atc_hit, atc_commentcnt
+			SELECT atc_no, atc_title, atc_content, atc_writer, atc_regdate, atc_hit, atc_replycnt
 			FROM tbl_article
 			WHERE atc_no > 0
 		]]>
@@ -50,6 +50,18 @@
 		<include refid="search"></include>
 	</select>
 	
+	<update id="updateReplyCnt">
+		UPDATE tbl_article
+		SET atc_replycnt = atc_replycnt + #{amount}
+		WHERE atc_no = #{articleNo}
+	</update>
+	
+	<update id="updateHit">
+		UPDATE tbl_article
+		SET atc_hit = atc_hit + 1
+		WHERE atc_no = #{articleNo}
+	</update>
+	
 	<resultMap id="ArticleResultMap" type="ArticleVO">
 		<id property="articleNo" column="atc_no"></id>
 		<result property="title" column="atc_title"></result>
@@ -57,7 +69,7 @@
 		<result property="writer" column="atc_writer"></result>
 		<result property="articleRegDate" column="atc_regdate"></result>
 		<result property="hit" column="atc_hit"></result>
-		<result property="commentCnt" column="atc_commentcnt"></result>
+		<result property="replyCnt" column="atc_replycnt"></result>
 	</resultMap>
 	
 	<sql id="search">

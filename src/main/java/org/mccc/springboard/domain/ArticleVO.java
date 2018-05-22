@@ -10,7 +10,7 @@ public class ArticleVO {
 	private String writer;
 	private Date articleRegDate;
 	private int hit;
-	private int commentCnt;
+	private int replyCnt;
 
 	public int getArticleNo() {
 		return articleNo;
@@ -59,19 +59,19 @@ public class ArticleVO {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
-
-	public int getCommentCnt() {
-		return commentCnt;
+	
+	public int getReplyCnt() {
+		return replyCnt;
 	}
 
-	public void setCommentCnt(int commentCnt) {
-		this.commentCnt = commentCnt;
+	public void setReplyCnt(int replyCnt) {
+		this.replyCnt = replyCnt;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "ArticleVO [articleNo=" + articleNo + ", title=" + title + ", content=" + content + ", writer=" + writer
-				+ ", articleRegDate=" + articleRegDate + ", hit=" + hit + ", commentCnt=" + commentCnt + "]";
+				+ ", articleRegDate=" + articleRegDate + ", hit=" + hit + ", replyCnt=" + replyCnt + "]";
 	}
     
 }
