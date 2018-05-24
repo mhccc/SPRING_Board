@@ -39,6 +39,18 @@
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>${org.aspectj-version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjtools -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjtools</artifactId>
+		    <version>${org.aspectj-version}</version>
+		</dependency>
 		
 		<!-- Logging -->
 		<dependency>
@@ -178,13 +190,6 @@
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-tx</artifactId>
 		    <version>${org.springframework-version}</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjtools -->
-		<dependency>
-		    <groupId>org.aspectj</groupId>
-		    <artifactId>aspectjtools</artifactId>
-		    <version>${org.aspectj-version}</version>
 		</dependency>
 		
 		<!-- Maven Repository -->
