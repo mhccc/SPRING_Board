@@ -25,6 +25,7 @@ public class ReplyController {
 	@Inject
 	private ReplyService replyService;
 	
+	//댓글 등록 POST
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<String> write(@RequestBody ReplyVO replyVO) {
 		ResponseEntity<String> entity = null;
@@ -40,6 +41,7 @@ public class ReplyController {
 		return entity;
 	}
 	
+	//댓글 조회 (GET)
 	@RequestMapping(value = "/{articleNo}/{pageNo}", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> list(@PathVariable("articleNo") Integer articleNo, @PathVariable("pageNo") Integer pageNo) {
 		ResponseEntity<Map<String, Object>> entity = null;
@@ -67,6 +69,7 @@ public class ReplyController {
 		return entity;
 	}
 	
+	//댓글 수정 (PUT, PATCH)
 	@RequestMapping(value = "/{replyNo}", method = {RequestMethod.PUT, RequestMethod.PATCH})
 	public ResponseEntity<String> modify(@PathVariable("replyNo") Integer replyNo, @RequestBody ReplyVO replyVO) {
 		ResponseEntity<String> entity = null;
@@ -83,6 +86,7 @@ public class ReplyController {
 		return entity;
 	}
 	
+	//댓글 삭제 (DELETE)
 	@RequestMapping(value = "/{replyNo}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> remove(@PathVariable("replyNo") Integer replyNo) {
 		ResponseEntity<String> entity = null;

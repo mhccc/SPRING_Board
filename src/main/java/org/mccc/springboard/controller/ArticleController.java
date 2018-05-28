@@ -25,7 +25,7 @@ public class ArticleController {
 	@Inject
 	private ArticleService articleService;
 	
-	//리스트 GET
+	//게시글 리스트 조회 (GET)
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(@ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
 		
@@ -41,7 +41,7 @@ public class ArticleController {
 		return "/article/list";
 	}
 	
-	//쓰기 GET
+	//게시글 쓰기 (GET)
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String writeGET() throws Exception {
 		
@@ -49,7 +49,7 @@ public class ArticleController {
 		
 		return "/article/write";
 	}
-	//쓰기 POST
+	//게시글 쓰기 (POST)
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String writePOST(ArticleVO articleVO, RedirectAttributes rttr) throws Exception {
 		
@@ -62,8 +62,14 @@ public class ArticleController {
 		
 		return "redirect:/article/list";
 	}
+	//이미지 업로드 (POST)
+	@RequestMapping(value = "/imageUpload", method = RequestMethod.POST)
+	public String imageUpload() {
+		logger.info("???????????????????????????????????");
+		return null;
+	}
 	
-	//읽기 GET
+	//게시글 조회 (GET)
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("articleNo") int articleNo, @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
 		
@@ -74,7 +80,7 @@ public class ArticleController {
 		return "/article/read";
 	}
 	
-	//수정 GET
+	//게시글 수정 (GET)
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String modifyGET(@RequestParam("articleNo") int articleNo, @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
 		
@@ -84,7 +90,7 @@ public class ArticleController {
 		
 		return "/article/modify";
 	}
-	//수정 POST
+	//게시글 수정 (POST)
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String modifyPOST(ArticleVO articleVO, Criteria criteria, RedirectAttributes rttr) throws Exception {
 		
@@ -102,7 +108,7 @@ public class ArticleController {
 		return "redirect:/article/read";
 	}
 	
-	//삭제 POST
+	//게시글 삭제 (POST)
 	@RequestMapping(value = "/remove", method = RequestMethod.POST)
 	public String remove(@RequestParam("articleNo") int articleNo, Criteria criteria, RedirectAttributes rttr) throws Exception {
 		

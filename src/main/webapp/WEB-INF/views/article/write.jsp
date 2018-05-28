@@ -78,7 +78,8 @@
 	$(function () {
 		CKEDITOR.replace('editor', {
 			extraPlugins: 'confighelper',
-	 		height: 480
+	 		height: 480,
+	 		filebrowserImageUploadUrl: '/article/imageUpload'
 	 	});
 		
 		$('#registerBtn').on('click', function () {

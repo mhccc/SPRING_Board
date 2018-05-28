@@ -24,6 +24,8 @@ public class LogAdvice {
 
         Object result = proceedingJoinPoint.proceed();
 
+        long endTime = System.currentTimeMillis();
+        
         String type = proceedingJoinPoint.getSignature().getDeclaringTypeName();
         String name = "";
 
@@ -35,10 +37,8 @@ public class LogAdvice {
             name = "Persistence : ";
         }
 
-        long endTime = System.currentTimeMillis();
-
         logger.info(name + type + "." + proceedingJoinPoint.getSignature().getName() + "()");
-        logger.info("Argument/Parameter : " + Arrays.toString(proceedingJoinPoint.getArgs()));
+        logger.info("Argument : " + Arrays.toString(proceedingJoinPoint.getArgs()));
         if (result != null) {
             logger.info("Return Value : " + result.toString());
         } else {

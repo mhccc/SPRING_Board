@@ -211,7 +211,7 @@
 		});
 		
 		$("#modalModBtn").on("click", function () {
-		    var replyNo = $(".curReplyNo").val();
+		    var replyNo = $(".modReplyNo").val();
 		    var replyText = $("#modReplyText").val();
 		    
 		    $.ajax({

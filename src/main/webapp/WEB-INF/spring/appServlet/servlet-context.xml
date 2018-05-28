@@ -27,6 +27,4 @@
 	
 	<context:component-scan base-package="org.mccc.springboard.controller" />
 	
-	<aop:aspectj-autoproxy />
-	
 </beans:beans>
