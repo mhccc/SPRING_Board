@@ -37,13 +37,13 @@
 					<div class="col-md-12">
 						<div class="box box-info">
 							<div class="box-body pad">
-								<table class="table table-bordered text-center">
+								<table class="table table-borderedz">
 									<tr>
-										<th style="width: 50px">번호</th>
-										<th>제목</th>
-										<th style="width: 100px">작성자</th>
-										<th style="width: 150px">작성일</th>
-										<th style="width: 60px">조회</th>
+										<th class="text-center" style="width: 90px">번호</th>
+										<th class="text-center">제목</th>
+										<th class="text-center" style="width: 110px">작성자</th>
+										<th class="text-center" style="width: 160px">작성일</th>
+										<th class="text-center" style="width: 80px">조회</th>
 									</tr>
 									<c:if test="${empty list}">
 										<td colspan="5">게시글이 없습니다.</td>
@@ -51,11 +51,11 @@
 									
 									<c:forEach var="article" items="${list}">
 										<tr>
-											<td>${article.articleNo}</td>
+											<td class="text-center">${article.articleNo}</td>
 											<td><a href='/article/read${pageMaker.makeQuery(pageMaker.criteria.page)}&articleNo=${article.articleNo}' style="margin-right: 3px">${article.title}</a> <span class="badge bg-blue"><i class="fa fa-comment-o margin-r-5"></i>${article.replyCnt}</span>
-											<td>${article.writer}</td>
-											<td><fmt:formatDate value="${article.articleRegDate}" pattern="yyyy-MM-dd HH:mm"/></td>
-											<td><span class="badge bg-red">${article.hit}</span></td>
+											<td class="text-center">${article.writer}</td>
+											<td class="text-center"><fmt:formatDate value="${article.articleRegDate}" pattern="yyyy-MM-dd HH:mm"/></td>
+											<td class="text-center"><span class="badge bg-red">${article.hit}</span></td>
 										</tr>
 									</c:forEach>
 								</table>

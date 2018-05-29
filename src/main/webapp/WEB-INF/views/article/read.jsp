@@ -78,17 +78,13 @@
 							<div class="box-body">
 								<form class="form-horizontal">
 							    	<div class="form-group margin">
-							        	<div class="col-sm-10">
+							        	<div class="col-sm-12">
 							       			<textarea class="form-control" id="newReplyText" rows="3" placeholder="내용을 입력해 주세요." style="resize: none"></textarea>
 						                </div>
-						                <div class="col-sm-2">
-						                    <input class="form-control" id="newReplyWriter" type="text" placeholder="댓글 작성자...">
-						                </div>
-						                <hr/>
-						                <div class="col-sm-2">
-						                    <button type="button" id="writeReplyBtn" class="btn btn-primary btn-block"><i class="fa fa-check-square-o margin-r-5"></i>등록</button>
-						                </div>
 						            </div>
+						            <div class="pull-right">
+					                    <button type="button" id="writeReplyBtn" class="btn btn-primary btn-block"><i class="fa fa-check-square-o margin-r-5"></i>등록</button>
+					                </div>
 						        </form>
 						    </div>
 						</div>
@@ -280,7 +276,7 @@
 		
 		function writeReply() {
 			var replyText = $("#newReplyText").val();
-		    var replyWriter = $("#newReplyWriter").val();
+		    var replyWriter = "TEST";
 
 		    $.ajax({
 		        type : "post",
