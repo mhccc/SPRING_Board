@@ -1,6 +1,11 @@
 package org.mccc.springboard.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.mccc.springboard.domain.ArticleVO;
 import org.mccc.springboard.domain.Criteria;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -62,11 +68,34 @@ public class ArticleController {
 		
 		return "redirect:/article/list";
 	}
-	//이미지 업로드 (POST)
-	@RequestMapping(value = "/imageUpload", method = RequestMethod.POST)
-	public String imageUpload() {
-		logger.info("???????????????????????????????????");
-		return null;
+	//파일 업로드 (POST)
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public String uploadPOST(HttpServletRequest request, @RequestParam MultipartFile upload, Model model) {
+		
+		logger.info("Article upload post ...... ");
+		
+		String rootPath = request.getSession().getServletContext().getRealPath("/");
+		String uploadPath = "resources/upload/";
+		UUID uid = UUID.randomUUID();
+		String fileName = "";
+		String CKEditorFuncNum = "";
+		
+		if (upload != null) {
+			fileName = uid + "_" + upload.getOriginalFilename();
+			CKEditorFuncNum = request.getParameter("CKEditorFuncNum");
+			try {
+				File file = new File(rootPath + uploadPath + fileName);
+				upload.transferTo(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		String filePath = "/" + uploadPath + fileName;
+		model.addAttribute("filePath", filePath);
+		model.addAttribute("CKEditorFuncNum", CKEditorFuncNum);
+		
+		return "/article/uploadResult";
 	}
 	
 	//게시글 조회 (GET)

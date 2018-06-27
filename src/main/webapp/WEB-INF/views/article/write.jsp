@@ -79,7 +79,7 @@
 		CKEDITOR.replace('editor', {
 			extraPlugins: 'confighelper',
 	 		height: 480,
-	 		filebrowserImageUploadUrl: '/article/imageUpload'
+	 		filebrowserUploadUrl: '/article/upload'
 	 	});
 		
 		$('#registerBtn').on('click', function () {
