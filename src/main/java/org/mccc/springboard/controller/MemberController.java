@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -42,13 +44,29 @@ public class MemberController {
 	}
 	
 	//아이디 중복 검사
-	//이메일 중복 검사
+	@ResponseBody
+	@RequestMapping(value = "/useridCheck", method = RequestMethod.POST)
+	public String useridCheckPOST(@RequestParam("userid") String userid) throws Exception {
+		
+		logger.info("Member userid post ...... ");
+		logger.info("userid : " + userid);
+		
+		MemberVO memberVO = memberService.readMember(userid);
+		String result = "";
+		
+		if (memberVO != null) {
+			result = "duplicate";
+		}
+		
+		return result;
+	}
 
 	//로그인 GET
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginGET() throws Exception {
 		
 		logger.info("Member login get ...... ");
+		
 		return "/member/login";
 	}
 	//로그인 POST

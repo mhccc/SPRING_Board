@@ -37,14 +37,14 @@
 					    	<div class="box-body pad">
 					        	<form role="form" method="post">
 					         		<div class="form-group">
-										<input type="text" name="title" class="form-control" placeholder="제목">
-					      			</div>
-					      			<textarea id="editor" name="content" rows="20" cols="80" placeholder="내용을 입력해 주세요."></textarea>
-					      			<hr>
-					     			<div class="text-center" style="margin-bottom: 10px;">
-					     				<input type="hidden" name="writer" value="TEST">
-					     				<button type="submit" id="registerBtn" class="btn btn-primary"><i class="fa fa-check-square-o margin-r-5"></i>등록</button>
-					  					<button type="button" id="cancelBtn" class="btn btn-warning"><i class="fa fa-undo margin-r-5"></i>취소</button>
+										<input type="text" id="title" name="title" class="form-control" placeholder="제목" style="margin-bottom: 10px;">
+						      			<textarea id="editor" name="content" rows="20" cols="80" placeholder="내용을 입력해 주세요."></textarea>
+						      			<hr>
+						     			<div class="text-center" style="margin-bottom: 10px;">
+						     				<input type="hidden" name="writer" value="TEST">
+						     				<button type="button" id="registerBtn" class="btn btn-primary"><i class="fa fa-check-square-o margin-r-5"></i>등록</button>
+						  					<button type="button" id="cancelBtn" class="btn btn-warning"><i class="fa fa-undo margin-r-5"></i>취소</button>
+						     			</div>
 					     			</div>
 					      		</form>
 					    	</div>
@@ -83,8 +83,13 @@
 	 	});
 		
 		$('#registerBtn').on('click', function () {
-			formObj.attr('action', '/article/write');
-    		formObj.submit();
+			if ($('#title').val() != '') {
+				formObj.attr('action', '/article/write');
+	    		formObj.submit();
+			} else {
+				alert("제목을 입력해주세요.");
+				$('#title').focus();
+			}
     	});
 		
 		$('#cancelBtn').on('click', function () {

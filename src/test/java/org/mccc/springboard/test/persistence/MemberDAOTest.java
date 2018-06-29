@@ -23,7 +23,10 @@ public class MemberDAOTest {
 	
 	@Test
 	public void testCreate() throws Exception {
-		MemberVO memberVO = new MemberVO("TEST", "TEST", "TEST@test.com");
+		MemberVO memberVO = new MemberVO();
+		memberVO.setUserid("TEST");
+		memberVO.setPassword("TEST");
+		memberVO.setEmail("TEST@test.com");
 		memberDAO.createMember(memberVO);
 	}
 	
@@ -36,7 +39,10 @@ public class MemberDAOTest {
 	
 	@Test
 	public void testUpdate() throws Exception {
-		MemberVO memberVO = new MemberVO("TEST", "MODTEST", "MODTEST@test.com");
+		MemberVO memberVO = new MemberVO();
+		memberVO.setUserid("TEST");
+		memberVO.setPassword("MODTEST");
+		memberVO.setEmail("MODTEST@test.com");
 		memberDAO.updateMember(memberVO);
 	}
 	

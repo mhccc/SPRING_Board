@@ -9,16 +9,16 @@ public class MemberVO {
 	private String email;
 	private Date memberRegDate;
 	
-	public MemberVO() {
-		super();
-	}
-	
-	public MemberVO(String userid, String password, String email) {
-		super();
-		this.userid = userid;
-		this.password = password;
-		this.email = email;
-	}
+//	public MemberVO() {
+//		super();
+//	}
+//	
+//	public MemberVO(String userid, String password, String email) {
+//		super();
+//		this.userid = userid;
+//		this.password = password;
+//		this.email = email;
+//	}
 
 	public String getUserid() {
 		return userid;

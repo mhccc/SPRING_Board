@@ -8,3 +8,5 @@
 <script src="/resources/dist/js/adminlte.min.js"></script>
 <!-- Handlebars 4.0.11 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+<!-- iCheck -->
+<script src="/resources/plugins/iCheck/icheck.min.js"></script>

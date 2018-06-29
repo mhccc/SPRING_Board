@@ -37,14 +37,14 @@
 			   		<button type="submit" class="btn btn-primary btn-block btn-flat">로그인</button>
 			 	</div>
 			  	<div class="row">
-			    	<div class="col-xs-7">
+			    	<div class="col-xs-5">
 			      		<a href="/member/join" class="text-center">회원가입</a>
 			    	</div>
 			    	<!-- /.col -->
-			    	<div class="col-xs-5">
+			    	<div class="col-xs-7">
 			      		<div class="checkbox icheck pull-right" style="margin: 0px;">
 			        		<label>
-			          		<input type="checkbox">로그인 상태 유지
+			          			<input type="checkbox">로그인 상태 유지
 			        		</label>
 			      		</div>
 			    	</div>
@@ -65,7 +65,7 @@
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
-      increaseArea: '20%' /* optional */
+      increaseArea: '20%'
     });
   });
   

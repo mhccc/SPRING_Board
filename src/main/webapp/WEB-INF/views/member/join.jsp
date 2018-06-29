@@ -16,7 +16,7 @@
 	  	<!-- /.register-logo -->
 		
 	  	<div class="register-box-body">
-	    	<form action="join" method="post" onsubmit="return checkForm();">
+	    	<form role="form" method="post">
 	      		<div class="form-group has-feedback">
 	      			<label class="control-label" for="userid">아이디</label>
 	        		<input type="text" id="userid" name="userid" class="form-control" maxlength="15" required autofocus>
@@ -42,7 +42,7 @@
 	        		</div>
 	      		</div>
 	      		<div class="form-group" style="margin-top: 20px;">
-	        		<button type="submit" class="btn btn-primary btn-block btn-flat">회원가입</button>
+	        		<button type=button id="joinBtn" class="btn btn-primary btn-block btn-flat">회원가입</button>
 	      		</div>
 	      		<a href="/member/login" class="text-center">이미 회원이신가요?</a>
 	    	</form>
@@ -56,15 +56,21 @@
 <%@ include file="../include/plugin_js.jsp" %>
 <script>
   
+  var useridCheck = false;
+  var emailCheck = false;
+  var passwordCheck = false;
+  
   $('#userid').keyup(function() {
 	  var len = $('#userid').val().length;
 	  
 	  if (len == 0) {
 		  $('#useridFeedback').attr('class', 'glyphicon glyphicon-user form-control-feedback');
 		  $('#useridCheckMessage').html('');
+		  useridCheck = false;
 	  } else if (len < 5) {
 		  $('#useridFeedback').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
 		  $('#useridCheckMessage').html('5자 이상 입력해주세요.');
+		  useridCheck = false;
 	  } else {
 		  var userid = $('#userid').val();
 		  $.ajax({
@@ -76,9 +82,11 @@
 				  if (data == "duplicate") {
 					  $('#useridFeedback').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
 					  $('#useridCheckMessage').html('이미 사용중인 아이디입니다.');
+					  useridCheck = false;
 				  } else {
 					  $('#useridFeedback').attr('class', 'glyphicon glyphicon-ok form-control-feedback');
 					  $('#useridCheckMessage').html('');
+					  useridCheck = true;
 				  }
 			  }
 		  })
@@ -90,23 +98,16 @@
 	  
 	  if (len == 0) {
 		  $('#emailFeedback').attr('class', 'glyphicon glyphicon-envelope form-control-feedback');
+		  $('#emailCheckMessage').html('');
+		  emailCheck = false;
+	  } else if (! $('#email').val().includes('@')) {
+		  $('#emailFeedback').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
+		  $('#emailCheckMessage').html('이메일 형식이 아닙니다.');
+		  emailCheck = false;
 	  } else {
-		  var email = $('#email').val();
-		  $.ajax({
-			  type: 'POST',
-			  url: 'emailCheck',
-			  data: {'email': email},
-			  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-			  success: function(data) {
-				  if (data == "duplicate") {
-					  $('#emailFeedback').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
-					  $('#emailCheckMessage').html('이미 사용중인 이메일입니다.');
-				  } else {
-					  $('#emailFeedback').attr('class', 'glyphicon glyphicon-ok form-control-feedback');
-					  $('#emailCheckMessage').html('');
-				  }
-			  }
-		  })
+		  $('#emailFeedback').attr('class', 'glyphicon glyphicon-ok form-control-feedback');
+		  $('#emailCheckMessage').html('');
+		  emailCheck = true;
 	  }
   });
   
@@ -116,20 +117,29 @@
 	  if (len == 0) {
 		  $('#passwordFeedback').attr('class', 'glyphicon glyphicon-lock form-control-feedback');
 		  $('#passwordCheckMessage').html('');
+		  passwordCheck = false;
 	  } else if (len < 8) {
 		  $('#passwordFeedback').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
 		  $('#passwordCheckMessage').html('8자 이상 입력해주세요.');
+		  passwordCheck = false;
 	  } else {
 		  $('#passwordFeedback').attr('class', 'glyphicon glyphicon-ok form-control-feedback');
 		  $('#passwordCheckMessage').html('');
+		  passwordCheck = true;
 	  }
   });
   
-  function checkForm() {
-	  /**
-	   각 입력에 대해 조건 검사해서 submit 버튼 비활성화 시키기
-	  **/
-  }
+  var formObj = $("form[role='form']");
+  
+  $('#joinBtn').on('click', function () {
+	  if (useridCheck && emailCheck && passwordCheck) {
+		  formObj.attr('action', '/member/join');
+		  formObj.submit();
+	  } else {
+		  alert("양식을 올바르게 입력해주세요.");
+	  }
+  });
+  
   
 </script>
 
