@@ -28,10 +28,18 @@
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></beans:bean>
 	
 	<beans:bean id="loginInterceptor" class="org.mccc.springboard.interceptor.LoginInterceptor"></beans:bean>
+	<beans:bean id="authInterceptor" class="org.mccc.springboard.interceptor.AuthInterceptor"></beans:bean>
+	
 	<interceptors>
+		<!-- 로그인 인터셉터 URL 매핑 -->
 		<interceptor>
 			<mapping path="/member/login" />
 			<beans:ref bean="loginInterceptor" />
+		</interceptor>
+		<!-- 로그인 검사 인터셉터 URL 매핑 -->
+		<interceptor>
+			<mapping path="/article/write" />
+			<beans:ref bean="authInterceptor" />
 		</interceptor>
 	</interceptors>
 	

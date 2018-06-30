@@ -21,6 +21,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 		if (session.getAttribute(LOGIN) != null) {
 			logger.info("Clear login data before ...... ");
+			
 			session.removeAttribute(LOGIN);
 		}
 		
@@ -35,8 +36,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 		if (memberVO != null) { 
 			logger.info("New login success ...... ");
+			
 			session.setAttribute(LOGIN, memberVO);
-			response.sendRedirect("/");
+			Object destination = session.getAttribute("dest");
+			response.sendRedirect(destination != null ? (String) destination : "/");
 		}
 	}
 
