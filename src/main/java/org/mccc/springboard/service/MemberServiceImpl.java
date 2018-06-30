@@ -3,6 +3,7 @@ package org.mccc.springboard.service;
 import javax.inject.Inject;
 
 import org.mccc.springboard.domain.MemberVO;
+import org.mccc.springboard.dto.LoginDTO;
 import org.mccc.springboard.persistence.MemberDAO;
 import org.springframework.stereotype.Service;
 
@@ -33,13 +34,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public boolean loginCheck(MemberVO memberVO) throws Exception {
-		MemberVO inquiryMemberVO = memberDAO.readMember(memberVO.getUserid());
+	public MemberVO login(LoginDTO loginDTO) throws Exception {
+		MemberVO inquiryMemberVO = memberDAO.readMember(loginDTO.getUserid());
 		
-		if (inquiryMemberVO == null) {
-			return false;
+		if (inquiryMemberVO != null && loginDTO.getPassword().equals(inquiryMemberVO.getPassword())) {
+			return inquiryMemberVO;
 		}
-		return memberVO.getPassword().equals(inquiryMemberVO.getPassword());
+		return null;
 	}
 
 }

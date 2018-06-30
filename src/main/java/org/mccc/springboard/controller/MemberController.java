@@ -1,12 +1,15 @@
 package org.mccc.springboard.controller;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.mccc.springboard.domain.MemberVO;
+import org.mccc.springboard.dto.LoginDTO;
 import org.mccc.springboard.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,16 +74,18 @@ public class MemberController {
 	}
 	//로그인 POST
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginPOST(MemberVO memberVO) throws Exception {
+	public void loginPOST(LoginDTO loginDTO, HttpSession session, Model model) throws Exception {
 		
 		logger.info("Member login post ...... ");
-		logger.info("MemberVO : " + memberVO.toString());
+		logger.info("LoginDTO : " + loginDTO.toString());
 		
-		if (memberService.loginCheck(memberVO)) {
-			return "redirect:/";
+		MemberVO loginMemberVO = memberService.login(loginDTO);
+		
+		if (loginMemberVO == null) {
+			return;
 		}
 		
-		return "/member/login";
+		model.addAttribute("memberVO", loginMemberVO);
 	}
 	
 }
