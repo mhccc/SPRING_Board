@@ -57,16 +57,15 @@ public class ArticleController {
 	}
 	//게시글 쓰기 (POST)
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String writePOST(ArticleVO articleVO, RedirectAttributes rttr) throws Exception {
+	public String writePOST(ArticleVO articleVO) throws Exception {
 		
 		logger.info("Article write post ...... ");
 		logger.info("ArticleVO : " + articleVO.toString());
 		
-		articleService.createArticle(articleVO);
+		int newArticleId = articleService.createArticle(articleVO);
+		PageMaker pageMaker = new PageMaker();
 		
-		rttr.addFlashAttribute("result", "writeSuccess");
-		
-		return "redirect:/article/list";
+		return "redirect:/article/read?articleNo=" + newArticleId;
 	}
 	//파일 업로드 (POST)
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)

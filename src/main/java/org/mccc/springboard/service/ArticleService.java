@@ -7,7 +7,7 @@ import org.mccc.springboard.domain.Criteria;
 
 public interface ArticleService {
 
-	public void createArticle(ArticleVO articleVO) throws Exception;
+	public Integer createArticle(ArticleVO articleVO) throws Exception;
 	
 	public ArticleVO readArticle(int articleNo) throws Exception;
 	

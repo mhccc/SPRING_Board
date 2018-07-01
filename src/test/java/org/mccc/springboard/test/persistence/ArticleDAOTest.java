@@ -17,13 +17,19 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={ "file:src/main/webapp/WEB-INF/spring/**/root-context.xml" })
+@ContextConfiguration(
+		locations={ "file:src/main/webapp/WEB-INF/spring/**/root-context.xml" })
 public class ArticleDAOTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(ArticleDAOTest.class);
 
 	@Inject
 	private ArticleDAO articleDAO;
+	
+	@Test
+	public void testConn() throws Exception {
+		articleDAO.readArticle(2);
+	}
 	
 	@Test
 	public void testCreateArticle() throws Exception {
@@ -71,6 +77,10 @@ public class ArticleDAOTest {
 		articleDAO.deleteArticle(articleNo);
 	}
 
+	@Test
+	public void testGetLastId() throws Exception {
+		logger.info("LastId : " + articleDAO.getLastId());
+	}
 	
 	@Test
 	public void testURI() throws Exception {

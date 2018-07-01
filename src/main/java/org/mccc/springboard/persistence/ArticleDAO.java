@@ -23,4 +23,6 @@ public interface ArticleDAO {
 	
 	public void updateHit(int articleNo) throws Exception;
 	
+	public int getLastId() throws Exception;
+	
 }

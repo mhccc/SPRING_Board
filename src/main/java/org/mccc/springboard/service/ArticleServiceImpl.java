@@ -17,9 +17,11 @@ public class ArticleServiceImpl implements ArticleService {
 	@Inject
 	private ArticleDAO articleDAO;
 
+	@Transactional
 	@Override
-	public void createArticle(ArticleVO articleVO) throws Exception {
+	public Integer createArticle(ArticleVO articleVO) throws Exception {
 		articleDAO.createArticle(articleVO);
+		return articleDAO.getLastId();
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED)

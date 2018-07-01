@@ -10,6 +10,10 @@
 		VALUES (#{title}, #{content}, #{writer})
 	</insert>
 	
+	<select id="getLastId" resultType="int">
+		SELECT last_insert_id()
+	</select>
+	
 	<select id="readArticle" resultMap="ArticleResultMap">
 		SELECT atc_no, atc_title, atc_content, atc_writer, atc_regdate, atc_hit, atc_replycnt
 		FROM tbl_article

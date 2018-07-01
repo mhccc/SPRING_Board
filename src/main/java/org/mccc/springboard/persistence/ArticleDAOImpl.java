@@ -62,4 +62,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 		sqlSession.update(NAMESPACE + ".updateHit", articleNo);
 	}
 
+	@Override
+	public int getLastId() throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".getLastId");
+	}
+
 }
