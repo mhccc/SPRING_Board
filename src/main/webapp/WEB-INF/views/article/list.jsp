@@ -46,7 +46,7 @@
 										<th class="text-center" style="width: 80px">조회</th>
 									</tr>
 									<c:if test="${empty list}">
-										<td colspan="5">게시글이 없습니다.</td>
+										<td class="text-center vertical-align" colspan="5" style="padding-top: 18px;">해당 조건의 게시글이 없습니다.</td>
 									</c:if>
 									
 									<c:forEach var="article" items="${list}">
@@ -60,7 +60,7 @@
 									</c:forEach>
 								</table>
 								<!-- paging -->
-								<c:if test="${true}">
+								<c:if test="${not empty list}">
 									<div class="text-center">
 										<ul class="pagination" style="margin-bottom: 10px">
 											<c:if test="${pageMaker.prev}">

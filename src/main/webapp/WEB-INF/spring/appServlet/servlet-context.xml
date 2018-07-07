@@ -39,6 +39,7 @@
 		<!-- 로그인 검사 인터셉터 URL 매핑 -->
 		<interceptor>
 			<mapping path="/article/write" />
+			<mapping path="/article/modify" />
 			<beans:ref bean="authInterceptor" />
 		</interceptor>
 	</interceptors>

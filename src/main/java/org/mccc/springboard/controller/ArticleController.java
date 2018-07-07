@@ -63,7 +63,6 @@ public class ArticleController {
 		logger.info("ArticleVO : " + articleVO.toString());
 		
 		int newArticleId = articleService.createArticle(articleVO);
-		PageMaker pageMaker = new PageMaker();
 		
 		return "redirect:/article/read?articleNo=" + newArticleId;
 	}

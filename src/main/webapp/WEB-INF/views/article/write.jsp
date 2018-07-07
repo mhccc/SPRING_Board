@@ -41,7 +41,7 @@
 						      			<textarea id="editor" name="content" rows="20" cols="80" placeholder="내용을 입력해 주세요."></textarea>
 						      			<hr>
 						     			<div class="text-center" style="margin-bottom: 10px;">
-						     				<input type="hidden" name="writer" value="TEST">
+						     				<input type="hidden" name="writer" value="${login.userid}">
 						     				<button type="button" id="registerBtn" class="btn btn-primary"><i class="fa fa-check-square-o margin-r-5"></i>등록</button>
 						  					<button type="button" id="cancelBtn" class="btn btn-warning"><i class="fa fa-undo margin-r-5"></i>취소</button>
 						     			</div>

@@ -61,7 +61,7 @@
 					                <input type="hidden" name="articleNo" value="${article.articleNo}">
 					            </form>
 							    <button id="listBtn" class="btn btn-primary"><i class="fa fa-list margin-r-5"></i>목록</button>
-								<c:if test="${article.writer eq article.writer}">
+								<c:if test="${login.userid eq article.writer}">
 									<div class="pull-right">
 										<button id="modifyBtn" class="btn btn-warning"><i class="fa fa-edit margin-r-5"></i>수정</button>
 										<button id="deleteBtn" class="btn btn-danger"><i class="fa fa-trash margin-r-5"></i>삭제</button>
@@ -71,24 +71,26 @@
 						</div>
 						<!-- /.box -->
 						
-						<div class="box box-info">
-							<div class="box-header with-border">
-							    <div style="color: #666"><i class="fa fa-pencil margin-r-5"></i>댓글 작성</div>
-							</div>
-							<div class="box-body">
-								<form class="form-horizontal">
-							    	<div class="form-group margin">
-							        	<div class="col-sm-12">
-							       			<textarea class="form-control" id="newReplyText" rows="3" placeholder="내용을 입력해 주세요." style="resize: none"></textarea>
+						<c:if test="${not empty login}">
+							<div class="box box-info">
+								<div class="box-header with-border">
+								    <div style="color: #666"><i class="fa fa-pencil margin-r-5"></i>댓글 작성</div>
+								</div>
+								<div class="box-body">
+									<form class="form-horizontal">
+								    	<div class="form-group margin">
+								        	<div class="col-sm-12">
+								       			<textarea class="form-control" id="newReplyText" rows="3" placeholder="내용을 입력해 주세요." style="resize: none"></textarea>
+							                </div>
+							            </div>
+							            <div class="pull-right">
+						                    <button type="button" id="writeReplyBtn" class="btn btn-primary btn-block"><i class="fa fa-check-square-o margin-r-5"></i>등록</button>
 						                </div>
-						            </div>
-						            <div class="pull-right">
-					                    <button type="button" id="writeReplyBtn" class="btn btn-primary btn-block"><i class="fa fa-check-square-o margin-r-5"></i>등록</button>
-					                </div>
-						        </form>
-						    </div>
-						</div>
-						<!-- /.box -->
+							        </form>
+							    </div>
+							</div>
+							<!-- /.box -->
+						</c:if>
 						
 						<div class="box box-info reply-widget">
 							<div class="box-header with-border">
@@ -148,18 +150,20 @@
 <%@ include file="../include/plugin_js.jsp" %>
 <script id="replyTemplate" type="text/x-handlebars-template">
     {{#each.}}
-    <div class="post replyDiv" data-replyNo={{replyNo}}>
-        <div class="user-block">
-            <img class="img-circle img-bordered-sm" src="../resources/dist/img/user1-128x128.jpg" alt="user image">
-            <span class="username">
-                <a href="#">{{replyWriter}}</a>
-                <a href="#" class="pull-right btn-box-tool" id="deleteReplyBtn"><i class="fa fa-trash"> 삭제</i></a>
-                <a href="#" class="pull-right btn-box-tool" id="modifyReplyBtn" data-toggle="modal" data-target="#modModal"><i class="fa fa-edit"> 수정</i></a>
-            </span>
-            <span class="description">{{prettifyDate replyRegdate}}</span>
-        </div>
-        <div class="oldReplyText">{{{escapeExp replyText}}}</div>
-    </div>
+   		<div class="post replyDiv" data-replyNo={{replyNo}}>
+    	    <div class="user-block">
+    	        <img class="img-circle img-bordered-sm" src="../resources/dist/img/user1-128x128.jpg" alt="user image">
+    	        <span class="username">
+    	            <a href="#">{{replyWriter}}</a>
+					{{#eqReplyer replyWriter}}
+    	            	<a href="#" class="pull-right btn-box-tool" id="deleteReplyBtn"><i class="fa fa-trash"> 삭제</i></a>
+    	            	<a href="#" class="pull-right btn-box-tool" id="modifyReplyBtn" data-toggle="modal" data-target="#modModal"><i class="fa fa-edit"> 수정</i></a>
+					{{/eqReplyer}}
+    	        </span>
+    	        <span class="description">{{prettifyDate replyRegdate}}</span>
+    	    </div>
+    	    <div class="oldReplyText">{{{escapeExp replyText}}}</div>
+    	</div>
     {{/each}}
 </script>
 <script>
@@ -276,7 +280,7 @@
 		
 		function writeReply() {
 			var replyText = $("#newReplyText").val();
-		    var replyWriter = "TEST";
+		    var replyWriter = "${login.userid}";
 
 		    $.ajax({
 		        type : "post",
@@ -365,12 +369,12 @@
 			}
 		}
 		
-		Handlebars.registerHelper("escapeExp", function (replyText) {
-			var text = Handlebars.Utils.escapeExpression(replyText);
-			text = text.replace(/(\r\n|\r|\n)/gm, "<br/>");
-			text = text.replace(/( )/gm, "&nbsp;");
-			
-			return new Handlebars.SafeString(text);
+		Handlebars.registerHelper("eqReplyer", function (replyWriter, block) {
+			var accum = "";
+			if (replyWriter == "${login.userid}") {
+				accum += block.fn();
+			}
+			return accum;
 		});
 		
 		Handlebars.registerHelper("prettifyDate", function (replyRegDate) {
@@ -387,6 +391,14 @@
 			minutes < 10 ? minutes = "0" + minutes : minutes;
 			
 			return year + "-" + month + "-" + date + " " + hours + ":" + minutes;
+		});
+		
+		Handlebars.registerHelper("escapeExp", function (replyText) {
+			var text = Handlebars.Utils.escapeExpression(replyText);
+			text = text.replace(/(\r\n|\r|\n)/gm, "<br/>");
+			text = text.replace(/( )/gm, "&nbsp;");
+			
+			return new Handlebars.SafeString(text);
 		});
 	});
 </script>
