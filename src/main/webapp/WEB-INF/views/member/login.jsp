@@ -19,10 +19,10 @@
 			<form action="login" method="post">
 				<div class="form-group has-feedback">
 					<label class="control-label" for="userid">아이디</label>
-					<input type="text" id="userid" name="userid" value="${param.mem_userid}" class="form-control" maxlength="15" required autofocus>
+					<input type="text" id="userid" name="userid" value="${userid}" class="form-control" maxlength="15" required autofocus>
 					<span class="glyphicon glyphicon-user form-control-feedback" id="useridFeedback"></span>
 				  	<div>
-				  		<h6 style="color:red;" id="useridCheckMessage"> <c:if test="${errors.invalidUserid}">등록되지 않은 아이디입니다.</c:if> </h6>
+				  		<h6 style="color:red;" id="useridCheckMessage"> <c:if test="${invalidUserid}">등록되지 않은 아이디입니다.</c:if> </h6>
 				  	</div>
 				</div>
 				<div class="form-group has-feedback">
@@ -30,7 +30,7 @@
 				  	<input type="password" id="password" name="password" class="form-control" maxlength="15" required>
 				  	<span class="glyphicon glyphicon-lock form-control-feedback" id="passwordFeedback"></span>
 				  	<div>
-				    	<h6 style="color:red;" id="passwordCheckMessage"> <c:if test="${errors.invalidPassword}">잘못된 비밀번호입니다.</c:if> </h6>
+				    	<h6 style="color:red;" id="passwordCheckMessage"> <c:if test="${invalidPassword}">잘못된 비밀번호입니다.</c:if> </h6>
 				  	</div>
 				</div>
 			  	<div class="form-group" style="margin-top: 20px;">
@@ -44,7 +44,7 @@
 			    	<div class="col-xs-7">
 			      		<div class="checkbox icheck pull-right" style="margin: 0px;">
 			        		<label>
-			          			<input type="checkbox">로그인 상태 유지
+			          			<input type="checkbox" name="userCookie"> 로그인 상태 유지
 			        		</label>
 			      		</div>
 			    	</div>
@@ -63,8 +63,8 @@
 
   $(function() {
     $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass: 'iradio_minimal-blue',
       increaseArea: '20%'
     });
   });

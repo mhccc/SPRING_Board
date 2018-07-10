@@ -4,17 +4,19 @@
   <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
 
-    <!-- Sidebar user panel (optional) -->
-    <div class="user-panel">
-      <div class="pull-left image">
-        <img src="/resources/dist/img/user1-128x128.jpg" class="img-circle" alt="User Image">
+	<c:if test="${not empty login}">
+	  <!-- Sidebar user panel (optional) -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="/resources/dist/img/user1-128x128.jpg" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>${login.userid}</p>
+          <!-- Status -->
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
       </div>
-      <div class="pull-left info">
-        <p>Alexander Pierce</p>
-        <!-- Status -->
-        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-      </div>
-    </div>
+	</c:if>
 
     <!-- search form (Optional) -->
     <form action="#" method="get" class="sidebar-form">

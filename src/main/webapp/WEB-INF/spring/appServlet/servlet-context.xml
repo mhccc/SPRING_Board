@@ -29,6 +29,7 @@
 	
 	<beans:bean id="loginInterceptor" class="org.mccc.springboard.interceptor.LoginInterceptor"></beans:bean>
 	<beans:bean id="authInterceptor" class="org.mccc.springboard.interceptor.AuthInterceptor"></beans:bean>
+	<beans:bean id="cookieInterceptor" class="org.mccc.springboard.interceptor.CookieInterceptor"></beans:bean>
 	
 	<interceptors>
 		<!-- 로그인 인터셉터 URL 매핑 -->
@@ -41,6 +42,11 @@
 			<mapping path="/article/write" />
 			<mapping path="/article/modify" />
 			<beans:ref bean="authInterceptor" />
+		</interceptor>
+		<!-- 자동로그인 쿠키 검사 인터셉터 URL 매핑 -->
+		<interceptor>
+			<mapping path="/**" />
+			<beans:ref bean="cookieInterceptor" />
 		</interceptor>
 	</interceptors>
 	

@@ -1,6 +1,11 @@
 package org.mccc.springboard.controller;
 
+import java.util.Date;
+
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.mccc.springboard.domain.MemberVO;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.WebUtils;
 
 @Controller
 @RequestMapping("member/*")
@@ -82,10 +88,49 @@ public class MemberController {
 		MemberVO loginMemberVO = memberService.login(loginDTO);
 		
 		if (loginMemberVO == null) {
-			return;
+			model.addAttribute("userid", loginDTO.getUserid());
+			
+			if (memberService.readMember(loginDTO.getUserid()) == null) {
+				model.addAttribute("invalidUserid", true);
+			} else if (! memberService.readMember(loginDTO.getUserid()).getPassword().equals(loginDTO.getPassword())) {
+				model.addAttribute("invalidPassword", true);
+			}
+			return ;
 		}
 		
 		model.addAttribute("memberVO", loginMemberVO);
+		
+		if (loginDTO.isUserCookie()) {
+			int amount = 60 * 60 * 24 * 7;
+			Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
+			memberService.keepLogin(loginMemberVO.getUserid(), session.getId(), sessionLimit);
+		}
+	}
+	
+	//로그아웃 GET
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logoutGET(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		
+		logger.info("Member logout GET ...... ");
+		
+		Object object = session.getAttribute("login");
+		
+		if (object != null) {
+			MemberVO memberVO = (MemberVO) object;
+			
+			session.removeAttribute("login");
+			session.invalidate();
+			
+			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+			if (loginCookie != null) {
+				loginCookie.setPath("/");
+				loginCookie.setMaxAge(0);
+				response.addCookie(loginCookie);
+				memberService.keepLogin(memberVO.getUserid(), session.getId(), new Date());
+			}
+		}
+		
+		return "redirect:/";
 	}
 	
 }

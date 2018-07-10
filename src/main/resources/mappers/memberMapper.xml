@@ -28,6 +28,18 @@
 		WHERE mem_userid = #{userid}
 	</delete>
 	
+	<update id="keepLogin">
+		UPDATE tbl_member
+		SET mem_sessionkey = #{sessionid}, mem_sessionlimit = #{next}
+		WHERE mem_userid = #{userid}
+	</update>
+	
+	<select id="checkMemberWithSessionKey" resultMap="MemberResultMap">
+		SELECT *
+		FROM tbl_member
+		WHERE mem_sessionkey = #{value} AND mem_sessionlimit > now()
+	</select>
+	
 	<resultMap id="MemberResultMap" type="MemberVO">
 		<id property="userid" column="mem_userid"></id>
 		<result property="email" column="mem_email"></result>

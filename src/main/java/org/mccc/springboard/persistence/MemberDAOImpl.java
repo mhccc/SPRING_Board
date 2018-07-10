@@ -1,5 +1,9 @@
 package org.mccc.springboard.persistence;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -35,6 +39,21 @@ public class MemberDAOImpl implements MemberDAO {
 	public void deleteMember(String userid) throws Exception {
 		
 		sqlSession.delete(NAMESAPCE + ".deleteMember", userid);
+	}
+
+	@Override
+	public void keepLogin(String userid, String sessionid, Date next) throws Exception {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("userid", userid);
+		paramMap.put("sessionid", sessionid);
+		paramMap.put("next", next);
+		
+		sqlSession.update(NAMESAPCE + ".keepLogin", paramMap);
+	}
+
+	@Override
+	public MemberVO checkMemberWithSessionKey(String value) {
+		return sqlSession.selectOne(NAMESAPCE + ".checkMemberWithSessionKey", value);
 	}
 
 }

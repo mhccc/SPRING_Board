@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="/resources/dist/css/loader/loader.css">
   <!-- Modal style -->
   <link rel="stylesheet" href="/resources/dist/css/modal/modal.css">
+  <!-- iCheck style -->
+  <link rel="stylesheet" href="/resources/plugins/iCheck/minimal/blue.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

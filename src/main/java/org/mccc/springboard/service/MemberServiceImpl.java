@@ -1,5 +1,7 @@
 package org.mccc.springboard.service;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import org.mccc.springboard.domain.MemberVO;
@@ -41,6 +43,16 @@ public class MemberServiceImpl implements MemberService {
 			return inquiryMemberVO;
 		}
 		return null;
+	}
+
+	@Override
+	public void keepLogin(String userid, String sessionid, Date next) throws Exception {
+		memberDAO.keepLogin(userid, sessionid, next);
+	}
+
+	@Override
+	public MemberVO checkLoginBefore(String value) {
+		return memberDAO.checkMemberWithSessionKey(value);
 	}
 
 }
